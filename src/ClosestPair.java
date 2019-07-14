@@ -1,9 +1,9 @@
-public class ClosestPairOfPoints {
+public class ClosestPair {
     private Point point1;
     private Point point2;
     private double distanceBetweenPoints;
 
-    public ClosestPairOfPoints(Point point1, Point point2) {
+    public ClosestPair(Point point1, Point point2) {
         this.point1 = point1;
         this.point2 = point2;
         this.distanceBetweenPoints = Utility.distance(point1, point2);
