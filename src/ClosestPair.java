@@ -20,5 +20,14 @@ public class ClosestPair {
     public double getDistanceBetweenPoints() {
         return distanceBetweenPoints;
     }
+
+    @Override
+    public String toString() {
+        return "ClosestPair{" +
+                "point1=" + point1 +
+                ", point2=" + point2 +
+                ", distanceBetweenPoints=" + distanceBetweenPoints +
+                '}';
+    }
 }
 

@@ -88,7 +88,7 @@ public class ClosestPairLogic {
     private List<Point> getPointsToConsider(List<Point> slab, int sparsityConstant, int index) {
         ArrayList<Point> returnList = new ArrayList<>();
         int counter = 0;
-        for (int i = index; i < slab.size(); i++){
+        for (int i = index+1; i < slab.size(); i++){
             returnList.add(slab.get(i));
             counter++;
             if (counter == sparsityConstant){
