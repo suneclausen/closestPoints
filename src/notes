@@ -1,1 +1,32 @@
 Kunne man lave point til et interface og så kunne man have en bestemt type til dimensionen???
+
+## Phase 1
+Make the general logic for 2d
+Just make it work and add the needed utilities and tools.
+Do not focus on make it smart - just make it work.
+--- DONE ---
+
+## Phase 2
+Make Point class support that it can take any dimension
+Make the logic support this change to the Point.java
+
+## Phase 3 (compositional design phase)
+Put the the parts that have different approaches for each new dimension.
+points of interest is:
+   - dividePoints
+   - presort
+   - perhaps also slab traversal.
+        - Check this out in next phase
+
+## Phase 4
+Make slow 3d algorithm in O(n lg^2 n) in the compositional architechture implemented in previous phase
+Verify it
+
+## Phase 4.1
+Consider making factories.
+
+## Phase 5
+Make the fast algorithm in 3d supporting the design.
+
+## Phase 5.1
+Make a k-dimensional implementation. (perhaps not possible without implementation 2d,3d,4d,...,k-1d, kd)
