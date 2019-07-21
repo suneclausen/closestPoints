@@ -1,5 +1,7 @@
 package mainComponents;
 
+import Factories.ClosestPairFactory;
+import Factories.TwoDFactory;
 import interfaces.DividingStrategy;
 import interfaces.PresortStrategy;
 import interfaces.SlabStrategy;
@@ -77,10 +79,10 @@ public class Utility {
         return cp;
     }
 
-    public static List<List<Point>> verifyAlgorithm(int dimension, int iterations, int maxNumberOfPoints, int upperBoudnValueForPoint, DividingStrategy divStrat, PresortStrategy sortStrat, SlabStrategy slabStrat) {  //TODO: Make strat for 2d  into factories
+    public static List<List<Point>> verifyAlgorithm(int dimension, int iterations, int maxNumberOfPoints, int upperBoudnValueForPoint, ClosestPairFactory stratFactory) {
         // for know hardcoded to support 2d
         System.out.println("Verify algorithm");
-        ClosestPairLogicImpl logic = new ClosestPairLogicImpl(2, divStrat, sortStrat, slabStrat);
+        ClosestPairLogicImpl logic = new ClosestPairLogicImpl(2, stratFactory);
 
         for (int i = 0; i < iterations; i++) {
             progressPercentage(i+1, iterations);

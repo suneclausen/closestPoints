@@ -1,5 +1,6 @@
 package mainComponents;
 
+import Factories.ClosestPairFactory;
 import interfaces.ClosestPairLogic;
 import interfaces.DividingStrategy;
 import interfaces.PresortStrategy;
@@ -17,11 +18,11 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
     private PresortStrategy presortStrat;
     private SlabStrategy slabStrat;
 
-    public ClosestPairLogicImpl(int originalDimension, DividingStrategy divideStrat, PresortStrategy presortStrat, SlabStrategy slabStrat) {
-        this.sparsityConstant = (int) (4 * (Math.pow(3,(originalDimension-1))));  //From theory by Bentley and Shamos: sparsityConstant = 4(3^{d-1}) , d = dimension
-        this.divideStrat = divideStrat;
-        this.presortStrat = presortStrat;
-        this.slabStrat = slabStrat;
+    public ClosestPairLogicImpl(int originalDimension, ClosestPairFactory stratFactory) {
+        this.sparsityConstant = (int) (4 * (Math.pow(3, (originalDimension - 1))));  //From theory by Bentley and Shamos: sparsityConstant = 4(3^{d-1}) , d = dimension
+        this.divideStrat = stratFactory.getDividePointsStrategy();
+        this.presortStrat = stratFactory.getPresortStrategy();
+        this.slabStrat = stratFactory.getSlabStrategy();
     }
 
 
