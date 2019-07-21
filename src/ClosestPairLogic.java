@@ -63,10 +63,10 @@ public class ClosestPairLogic {
 
         List<Point> slab = new ArrayList<>();
         List<Point> pointsSortedByY = points.get(1);
-        double medianPointX = points.get(0).get(medianIndex).getX();
+        double medianPointX = points.get(0).get(medianIndex).getCoordinates()[0];
         for (int i = 0; i < pointsSortedByY.size(); i++) {
             Point point = pointsSortedByY.get(i);
-            double currentPointX = point.getX();
+            double currentPointX = point.getCoordinates()[0];
             if (currentPointX >= (medianPointX - delta) && currentPointX <= (medianPointX + delta)) {
                 slab.add(point);
             }
@@ -93,6 +93,8 @@ public class ClosestPairLogic {
     }
 
     private void checkSorting(List<List<Point>> points) {
+        // index 0 = x
+        // index 1 = y
         // for x
         List<Point> pointsSOrtedX = points.get(0);
         List<Point> pointsSOrtedY = points.get(1);
@@ -103,7 +105,7 @@ public class ClosestPairLogic {
             Point previousPoint = pointsSOrtedX.get(i-1);
             Point currentPoint = pointsSOrtedX.get(i);
 
-            if (previousPoint.getX() <= currentPoint.getX()){
+            if (previousPoint.getCoordinates()[0] <= currentPoint.getCoordinates()[0]){
                 continue;
             }else{
                 throw new RuntimeException("The set was not sorted");
@@ -113,7 +115,7 @@ public class ClosestPairLogic {
             Point previousPoint = pointsSOrtedY.get(i-1);
             Point currentPoint = pointsSOrtedY.get(i);
 
-            if (previousPoint.getY() <= currentPoint.getY()){
+            if (previousPoint.getCoordinates()[1] <= currentPoint.getCoordinates()[1]){
                 continue;
             }else{
                 throw new RuntimeException("The set was not sorted");
@@ -181,6 +183,8 @@ public class ClosestPairLogic {
 
     // For now it is only for 2d
     public List<List<Point>> presort(List<Point> points) {
+        int X = 0;
+        int Y = 1;
         List<List<Point>> returnList = new ArrayList<>();
 
         //Sort by x
@@ -188,7 +192,7 @@ public class ClosestPairLogic {
         sortedByX.sort(new Comparator<Point>() {
             @Override
             public int compare(Point p1, Point p2) {
-                double value = (p1.getX() - p2.getX());
+                double value = (p1.getCoordinates()[X] - p2.getCoordinates()[X]);
                 if (value < 0) {
                     return -1;
                 } else if (value > 0) {
@@ -199,11 +203,11 @@ public class ClosestPairLogic {
             }
         });
 
+        // set the index of the point of where it is in the x-sorted-list
         for (int i = 0; i < sortedByX.size(); i++) {
             Point p = sortedByX.get(i);
             p.setIndex(i);
         }
-//        System.out.println("sorted x\n " + sortedByX);
 
         // Sort by y and keep the index
         List<Point> sortedByY = new ArrayList<>();
@@ -211,7 +215,7 @@ public class ClosestPairLogic {
         Collections.sort(sortedByY, new Comparator<Point>() {
             @Override
             public int compare(Point p1, Point p2) {
-                double value = (p1.getY() - p2.getY());
+                double value = (p1.getCoordinates()[Y] - p2.getCoordinates()[Y]);
                 if (value < 0) {
                     return -1;
                 } else if (value > 0) {

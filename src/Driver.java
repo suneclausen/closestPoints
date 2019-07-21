@@ -6,11 +6,12 @@ public class Driver
         System.out.println("Works");
 
         List<Point> points = new ArrayList<>();
-        points.add(new Point(4,4));
-        points.add(new Point(7,7));
-        points.add(new Point(1,1));
-        points.add(new Point(10,1));
-        points.add(new Point(3,3));
+        points.add(new Point(2, new double[]{4,4}));
+        points.add(new Point(2, new double[]{7,7}));
+        points.add(new Point(2, new double[]{1,1}));
+        points.add(new Point(2, new double[]{10,1}));
+        points.add(new Point(2, new double[]{3,3}));
+
 
         int counter = 0;
         for (Point point : points) {
@@ -28,7 +29,9 @@ public class Driver
 //        System.out.println("return value \n" + closestPair.toString());
 
 
+        System.out.println("generate random points");
         List<Point> randomPoints = Utility.generateRandomPoints(8, 20, 2, true);
+        System.out.println("Trying bruteforce");
         ClosestPair bruteforce = Utility.bruteforce(randomPoints);
 
 //        List<List<Point>> testPresort = logic.presort(randomPoints);
@@ -36,7 +39,7 @@ public class Driver
 //        System.out.println("ClosestPairAlgo: " + testReturn);
 //        System.out.println("BruteForce: " + bruteforce);
 
-        List<List<Point>> lists = Utility.verifyAlgorithm();
+        List<List<Point>> lists = Utility.verifyAlgorithm(200, 5000);
         if (lists != null){
             System.out.println("points \n" + lists);
             System.out.println();

@@ -2,11 +2,20 @@ import java.util.*;
 
 public class Utility {
 
-    //TODO: Support any dimension. Now it just supports two dim.
     //Calculate the euclidian distance
     public static double distance(Point point1, Point point2) {
+        double[] coordinatesPoint1 = point1.getCoordinates();
+        double[] coordinatesPoint2 = point2.getCoordinates();
+        int dimension = point1.getDimension();
+        assert coordinatesPoint1.length == coordinatesPoint2.length; //Assume points have same dimension
 
-        double temp = Math.pow((point1.getX() - point2.getX()), 2) + Math.pow((point1.getY() - point2.getY()), 2);
+        double temp = 0.0;
+        for (int i = 0; i < dimension; i++) {
+            double coordinateValFromPoint1 = coordinatesPoint1[i];
+            double coordinateValFromPoint2 = coordinatesPoint2[i];
+            double diffValue = coordinateValFromPoint1 - coordinateValFromPoint2;
+            temp += Math.pow(diffValue, 2);
+        }
 
         return Math.sqrt(temp);
     }
@@ -21,18 +30,17 @@ public class Utility {
                 if (asInt) { //meaning wihh .000
                     int number = (int) (Math.random() * upperBound);
                     coordinate[j] = ((double) number);
-                    int k = 2;
                 } else {
                     coordinate[j] = Math.random() * upperBound;
                 }
             }
-            Point p = new Point(0, 0);
-            p.setX(coordinate[0]);
-            p.setY(coordinate[1]);
-
+            Point p = new Point(dimension, coordinate);
+//            System.out.println("new point added" + p +  " making the size of points to be " + points.size());
             points.add(p);
+//            System.out.println("Now" + points.size());
         }
 
+        // Convert the hashSet into a lsit to make logic work.
         List<Point> returnList = new ArrayList<>();
         returnList.addAll(points);
 
@@ -42,31 +50,52 @@ public class Utility {
 
     public static ClosestPair bruteforce(List<Point> points) {
         ClosestPair cp = new ClosestPair(points.get(0), points.get(1));
-        for (Point point1 : points) {
-            for (Point point2 : points) {
-            if (point1.getX() == point2.getX() && point1.getY() == point2.getY()) {
+
+        int dimension = points.get(0).getDimension();
+
+        for (int i = 0; i < points.size(); i++) {
+            Point currentPoint = points.get(i);
+            for (int j = 0; j < points.size(); j++) {
+                if (i == j){ // it is the same point
                     continue;
                 }
-                double distance = distance(point1, point2);
+                Point comparePoint = points.get(j);
+                if (comparePoint.getCoordinates().equals(currentPoint.getCoordinates())){
+                    // it is then the same point... Should not happen, since dataset will not then be sparse
+                    continue;
+                }
+                double distance = distance(currentPoint, comparePoint);
                 if (distance < cp.getDistanceBetweenPoints()) {
-                    cp = new ClosestPair(point1, point2);
+                    cp = new ClosestPair(currentPoint, comparePoint);
                 }
             }
         }
+
+//        for (Point point1 : points) {
+//            for (Point point2 : points) {
+//            if (point1.getX() == point2.getX() && point1.getY() == point2.getY()) {
+//                    continue;
+//                }
+//                double distance = distance(point1, point2);
+//                if (distance < cp.getDistanceBetweenPoints()) {
+//                    cp = new ClosestPair(point1, point2);
+//                }
+//            }
+//        }
         return cp;
     }
 
-    public static List<List<Point>> verifyAlgorithm() {
+    public static List<List<Point>> verifyAlgorithm(int iterations, int maxNumberOfPoints) {
         // for know hardcoded to support 2d
         System.out.println("Verify algorithm");
         ClosestPairLogic logic = new ClosestPairLogic();
 
-        int iterations = 5000;
+//        int iterations = 5000;
         for (int i = 0; i < iterations; i++) {
             progressPercentage(i+1, iterations);
-            int numberOfPoints = (int) (Math.random() * 8000) + 2;
+            int numberOfPoints = (int) (Math.random() * maxNumberOfPoints) + 2;
 //            int numberOfPoints = 15;
-            int upperBound = 1000;
+            int upperBound = 1000; //for how big the numbers can be
 
             List<Point> points = generateRandomPoints(numberOfPoints, upperBound, 2, true);
 

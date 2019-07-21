@@ -2,10 +2,39 @@ public class Point {
     private double x;
     private double y;
     private int index;
+    private double[] coordinates;
+    private int dimension;
 
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
+//    public Point(double x, double y) {
+//        this.x = x;
+//        this.y = y;
+//    }
+
+    public Point(int dimension, double[] coordinates){
+        this.dimension = dimension;
+
+        if (dimension != coordinates.length){
+            throw new RuntimeException("There was a mismatch between the dimension and the coordiantes given. " +
+                    "The dimension given was: " + dimension +  ". The dimension of the coordinates was: " + coordinates.length);
+        }
+
+        this.coordinates = coordinates;
+    }
+
+    public double[] getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(double[] coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public int getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(int dimension) {
+        this.dimension = dimension;
     }
 
     public double getX() {
@@ -35,22 +64,12 @@ public class Point {
     @Override
     public String toString() {
         return "Point{" +
-                "x=" + x +
-                ", y=" + y +
+                "x=" + coordinates[0] +
+                ", y=" + coordinates[1] +
                 ", index=" + index +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Point point = (Point) o;
-
-        if (Double.compare(point.x, x) != 0) return false;
-        return Double.compare(point.y, y) == 0;
-    }
 
     @Override
     public int hashCode() {
