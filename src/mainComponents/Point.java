@@ -1,16 +1,9 @@
 package mainComponents;
 
 public class Point {
-    private double x;
-    private double y;
     private int index;
     private double[] coordinates;
     private int dimension;
-
-//    public Point(double x, double y) {
-//        this.x = x;
-//        this.y = y;
-//    }
 
     public Point(int dimension, double[] coordinates){
         this.dimension = dimension;
@@ -39,22 +32,6 @@ public class Point {
         this.dimension = dimension;
     }
 
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
     public void setIndex(int index) {
         this.index = index;
     }
@@ -71,21 +48,4 @@ public class Point {
                 ", index=" + index +
                 '}';
     }
-
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        temp = Double.doubleToLongBits(x);
-        result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(y);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
-
-    //    @Override
-//    public int compareTo(Object o) {
-//        return x.compareTo(((Point)o).getX());
-//    }
 }

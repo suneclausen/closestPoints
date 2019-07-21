@@ -2,6 +2,8 @@ package mainComponents;
 
 import interfaces.ClosestPairLogic;
 import interfaces.DividingStrategy;
+import interfaces.PresortStrategy;
+import interfaces.SlabStrategy;
 
 
 import java.util.*;
@@ -11,20 +13,17 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
     private int sparsityConstant = 12;
 
     // Strategies
-    DividingStrategy divideStrat;
+    private DividingStrategy divideStrat;
+    private PresortStrategy presortStrat;
+    private SlabStrategy slabStrat;
 
-    public void setSparsityConstant(int sparsityConstant) {
-        this.sparsityConstant = sparsityConstant;
-    }
-
-    public int getSparsityConstant() {
-        return sparsityConstant;
-    }
-
-    public ClosestPairLogicImpl(DividingStrategy divideStrat) {
+    public ClosestPairLogicImpl(int originalDimension, DividingStrategy divideStrat, PresortStrategy presortStrat, SlabStrategy slabStrat) {
+        this.sparsityConstant = (int) (4 * (Math.pow(3,(originalDimension-1))));  //From theory by Bentley and Shamos: sparsityConstant = 4(3^{d-1}) , d = dimension
         this.divideStrat = divideStrat;
-
+        this.presortStrat = presortStrat;
+        this.slabStrat = slabStrat;
     }
+
 
     //Param: Points: Sorted set of points to the respectve coordinate axes
     public ClosestPair closestPair(List<List<Point>> points, String recursion) {
@@ -59,13 +58,15 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
             return closestPairOfTheThreePossibilities;
         }
 
+        // Find median index for the diving line which will split the set into two parts 'left' and 'right' of almost equal size.
         int medianIndex = (int) (Math.ceil(((double) numberOfPoints / 2)) - 1);
-        // divide points and call recursively getting a side A and B
+
+        // Divide points and call recursively getting a side A and B
         List[] lists = dividePoints(points, points.get(0).get(medianIndex).getIndex());  //get the given index of the medianpoint at the median point index.
         List<List<Point>> left = lists[0];
         List<List<Point>> right = lists[1];
-        ClosestPair closestPairLeft = closestPair(left, recursion+"A");
-        ClosestPair closestPairRight = closestPair(right, recursion+"B");
+        ClosestPair closestPairLeft = closestPair(left, recursion + "A");
+        ClosestPair closestPairRight = closestPair(right, recursion + "B");
 
 
         // Find which one is the minimum of A and B and set this as the closest pair seen so far
@@ -73,33 +74,10 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
 
         // Build the slab
         double delta = currentClosestPair.getDistanceBetweenPoints();
-
-        List<Point> slab = new ArrayList<>();
-        List<Point> pointsSortedByY = points.get(1);
-        double medianPointX = points.get(0).get(medianIndex).getCoordinates()[0];
-        for (int i = 0; i < pointsSortedByY.size(); i++) {
-            Point point = pointsSortedByY.get(i);
-            double currentPointX = point.getCoordinates()[0];
-            if (currentPointX >= (medianPointX - delta) && currentPointX <= (medianPointX + delta)) {
-                slab.add(point);
-            }
-        }
-
-        int numberOfSlabPoints = slab.size();
+        List<Point> slab = slabStrat.buildSlab(points, delta, medianIndex);
 
         // Traverse the slab
-        for (int i = 0; i < numberOfSlabPoints; i++) {
-            Point currentPoint = slab.get(i);
-            List<Point> pointsToConsider = getPointsToConsider(slab, sparsityConstant+1, i);
-
-            for (Point point : pointsToConsider) {
-                double distance = Utility.distance(currentPoint, point);
-                if (distance < currentClosestPair.getDistanceBetweenPoints()) {
-//                    System.out.println("wrote new closest pair from slab traversel with points: " + currentPoint + point);
-                    currentClosestPair = new ClosestPair(currentPoint, point);
-                }
-            }
-        }
+        currentClosestPair = slabStrat.traverseSlab(currentClosestPair, slab, this);
 
         //return the currentClosestPoint
         return currentClosestPair;
@@ -112,12 +90,12 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
 
             int coordinateToLookAt = i; // is going to set the focus of coordiante. Such that first time it is x, then y etc. Assumes the points are given as (sortedByx, sortedByY, sortedByZ, .... )
             for (int j = 1; j < sortedSet.size(); j++) {
-                Point previousPoint = sortedSet.get(j-1);
+                Point previousPoint = sortedSet.get(j - 1);
                 Point currentPoint = sortedSet.get(j);
 
-                if (previousPoint.getCoordinates()[coordinateToLookAt] <= currentPoint.getCoordinates()[coordinateToLookAt]){
+                if (previousPoint.getCoordinates()[coordinateToLookAt] <= currentPoint.getCoordinates()[coordinateToLookAt]) {
                     continue;
-                }else{
+                } else {
                     throw new RuntimeException("The set was not sorted");
                 }
             }
@@ -125,12 +103,13 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
     }
 
 
-    private List<Point> getPointsToConsider(List<Point> slab, int sparsityConstant, int index) {
+    // Find how many points to consider in a sorted order based on the sparsity constant and only considering the points from the slab.
+    public List<Point> getPointsToConsider(List<Point> slab, int sparsityConstant, int index) {
         ArrayList<Point> returnList = new ArrayList<>();
         int counter = 0;
         for (int i = index + 1; i < slab.size(); i++) {
             returnList.add(slab.get(i));
-            if (counter == sparsityConstant || i == slab.size()-1) {
+            if (counter == sparsityConstant || i == slab.size() - 1) {
                 break;
             }
             counter++;
@@ -146,93 +125,17 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
         }
     }
 
+    public int getSparsityConstant() {
+        return sparsityConstant;
+    }
+
     @Override
     public List[] dividePoints(List<List<Point>> points, int medianIndex) {
         return divideStrat.dividePoints(points, medianIndex);
-//        List<Point> pointsByX = points.get(0);
-//        List<Point> pointsByY = points.get(1);
-//
-//        // Get the x set
-//        List<Point> pointsByX_Left = new ArrayList<>();
-//        List<Point> pointsByX_Right = new ArrayList<>();
-//        for (Point point : pointsByX) {
-//            if (point.getIndex() <= medianIndex) {
-//                pointsByX_Left.add(point);
-//            } else {
-//                pointsByX_Right.add(point);
-//            }
-//        }
-//
-//        // Get the y set
-//        List<Point> pointsByY_Left = new ArrayList<>();
-//        List<Point> pointsByY_Right = new ArrayList<>();
-//        for (Point point : pointsByY) {
-//            if (point.getIndex() <= medianIndex) {
-//                pointsByY_Left.add(point);
-//            } else {
-//                pointsByY_Right.add(point);
-//            }
-//        }
-//
-//        List<List<Point>> left = new ArrayList<>();
-//        List<List<Point>> rigth = new ArrayList<>();
-//        left.add(pointsByX_Left);
-//        left.add(pointsByY_Left);
-//        rigth.add(pointsByX_Right);
-//        rigth.add(pointsByY_Right);
-//
-//        return new List[]{left, rigth};
     }
 
     @Override
     public List<List<Point>> presort(List<Point> points) {
-        int X = 0;
-        int Y = 1;
-        List<List<Point>> returnList = new ArrayList<>();
-
-        //Sort by x
-        List<Point> sortedByX = points;
-        sortedByX.sort(new Comparator<Point>() {
-            @Override
-            public int compare(Point p1, Point p2) {
-                double value = (p1.getCoordinates()[X] - p2.getCoordinates()[X]);
-                if (value < 0) {
-                    return -1;
-                } else if (value > 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-
-        // set the index of the point of where it is in the x-sorted-list
-        for (int i = 0; i < sortedByX.size(); i++) {
-            Point p = sortedByX.get(i);
-            p.setIndex(i);
-        }
-
-        // Sort by y and keep the index
-        List<Point> sortedByY = new ArrayList<>();
-        sortedByY.addAll(sortedByX);
-        Collections.sort(sortedByY, new Comparator<Point>() {
-            @Override
-            public int compare(Point p1, Point p2) {
-                double value = (p1.getCoordinates()[Y] - p2.getCoordinates()[Y]);
-                if (value < 0) {
-                    return -1;
-                } else if (value > 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-//        System.out.println("sorted y\n " + sortedByY);
-
-        returnList.add(sortedByX);
-        returnList.add(sortedByY);
-
-        return returnList;
+        return presortStrat.presort(points);
     }
 }

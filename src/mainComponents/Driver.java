@@ -2,6 +2,8 @@ package mainComponents;
 
 import interfaces.ClosestPairLogic;
 import two_d.TwoDDividingStrategy;
+import two_d.TwoDPresortStrategy;
+import two_d.TwoDSlabStrategy;
 
 import java.util.*;
 
@@ -27,7 +29,7 @@ public class Driver {
         parameter.add(points);
         parameter.add(points);
 
-        ClosestPairLogic logic = new ClosestPairLogicImpl(new TwoDDividingStrategy());
+        ClosestPairLogic logic = new ClosestPairLogicImpl(2, new TwoDDividingStrategy(), new TwoDPresortStrategy(), new TwoDSlabStrategy());
 //        List<List<Point>> sortedPoints = logic.presort(points);
 //        ClosestPair closestPair = logic.closestPair(sortedPoints);
 //        System.out.println("return value \n" + closestPair.toString());
@@ -43,7 +45,7 @@ public class Driver {
         System.out.println("ClosestPairAlgo: " + testReturn);
         System.out.println("BruteForce: " + bruteforce);
 
-        List<List<Point>> lists = Utility.verifyAlgorithm(2, 200, 5000, 1000, new TwoDDividingStrategy());
+        List<List<Point>> lists = Utility.verifyAlgorithm(2, 200, 5000, 1000, new TwoDDividingStrategy(), new TwoDPresortStrategy(), new TwoDSlabStrategy());
 //        if (lists != null){
 //            System.out.println("points \n" + lists);
 //            System.out.println();
