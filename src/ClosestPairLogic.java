@@ -96,29 +96,20 @@ public class ClosestPairLogic {
         // index 0 = x
         // index 1 = y
         // for x
-        List<Point> pointsSOrtedX = points.get(0);
-        List<Point> pointsSOrtedY = points.get(1);
+        int numberOfsortedSets = points.size();
+        for (int i = 0; i < numberOfsortedSets; i++) {
+            List<Point> sortedSet = points.get(i);
 
-        assert pointsSOrtedX.size() == pointsSOrtedY.size();
+            int coordinateToLookAt = i; // is going to set the focus of coordiante. Such that first time it is x, then y etc. Assumes the points are given as (sortedByx, sortedByY, sortedByZ, .... )
+            for (int j = 1; j < sortedSet.size(); j++) {
+                Point previousPoint = sortedSet.get(j-1);
+                Point currentPoint = sortedSet.get(j);
 
-        for (int i = 1; i <pointsSOrtedX.size() ; i++) {
-            Point previousPoint = pointsSOrtedX.get(i-1);
-            Point currentPoint = pointsSOrtedX.get(i);
-
-            if (previousPoint.getCoordinates()[0] <= currentPoint.getCoordinates()[0]){
-                continue;
-            }else{
-                throw new RuntimeException("The set was not sorted");
-            }
-        }
-        for (int i = 1; i <pointsSOrtedY.size() ; i++) {
-            Point previousPoint = pointsSOrtedY.get(i-1);
-            Point currentPoint = pointsSOrtedY.get(i);
-
-            if (previousPoint.getCoordinates()[1] <= currentPoint.getCoordinates()[1]){
-                continue;
-            }else{
-                throw new RuntimeException("The set was not sorted");
+                if (previousPoint.getCoordinates()[coordinateToLookAt] <= currentPoint.getCoordinates()[coordinateToLookAt]){
+                    continue;
+                }else{
+                    throw new RuntimeException("The set was not sorted");
+                }
             }
         }
     }
