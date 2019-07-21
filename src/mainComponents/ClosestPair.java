@@ -1,3 +1,5 @@
+package mainComponents;
+
 public class ClosestPair {
     private Point point1;
     private Point point2;

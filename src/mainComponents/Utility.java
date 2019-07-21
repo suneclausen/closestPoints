@@ -1,3 +1,7 @@
+package mainComponents;
+
+import interfaces.DividingStrategy;
+
 import java.util.*;
 
 public class Utility {
@@ -22,7 +26,7 @@ public class Utility {
 
     //TODO: Make more dynamic and generic
     public static List<Point> generateRandomPoints(int numberOfPoints, int upperBound, int dimension, boolean asInt) {
-        Set<Point> points = new HashSet<>();
+        Set<Point> points = new LinkedHashSet<>();
 
         while (points.size() < numberOfPoints) {
             double[] coordinate = new double[dimension];
@@ -51,8 +55,6 @@ public class Utility {
     public static ClosestPair bruteforce(List<Point> points) {
         ClosestPair cp = new ClosestPair(points.get(0), points.get(1));
 
-        int dimension = points.get(0).getDimension();
-
         for (int i = 0; i < points.size(); i++) {
             Point currentPoint = points.get(i);
             for (int j = 0; j < points.size(); j++) {
@@ -70,34 +72,20 @@ public class Utility {
                 }
             }
         }
-
-//        for (Point point1 : points) {
-//            for (Point point2 : points) {
-//            if (point1.getX() == point2.getX() && point1.getY() == point2.getY()) {
-//                    continue;
-//                }
-//                double distance = distance(point1, point2);
-//                if (distance < cp.getDistanceBetweenPoints()) {
-//                    cp = new ClosestPair(point1, point2);
-//                }
-//            }
-//        }
         return cp;
     }
 
-    public static List<List<Point>> verifyAlgorithm(int iterations, int maxNumberOfPoints) {
+    public static List<List<Point>> verifyAlgorithm(int dimension, int iterations, int maxNumberOfPoints, int upperBoudnValueForPoint, DividingStrategy divStrat) {  //TODO: Make strat for 2d  into factories
         // for know hardcoded to support 2d
         System.out.println("Verify algorithm");
-        ClosestPairLogic logic = new ClosestPairLogic();
+        ClosestPairLogicImpl logic = new ClosestPairLogicImpl(divStrat);
 
-//        int iterations = 5000;
         for (int i = 0; i < iterations; i++) {
             progressPercentage(i+1, iterations);
             int numberOfPoints = (int) (Math.random() * maxNumberOfPoints) + 2;
-//            int numberOfPoints = 15;
             int upperBound = 1000; //for how big the numbers can be
 
-            List<Point> points = generateRandomPoints(numberOfPoints, upperBound, 2, true);
+            List<Point> points = generateRandomPoints(numberOfPoints, upperBoudnValueForPoint, dimension, true);
 
             ClosestPair bruteforce = bruteforce(points);
             double dist = bruteforce.getDistanceBetweenPoints();

@@ -1,9 +1,17 @@
-import java.security.cert.CollectionCertStoreParameters;
+package mainComponents;
+
+import interfaces.ClosestPairLogic;
+import interfaces.DividingStrategy;
+
+
 import java.util.*;
 
-public class ClosestPairLogic {
+public class ClosestPairLogicImpl implements ClosestPairLogic {
 
     private int sparsityConstant = 12;
+
+    // Strategies
+    DividingStrategy divideStrat;
 
     public void setSparsityConstant(int sparsityConstant) {
         this.sparsityConstant = sparsityConstant;
@@ -13,7 +21,12 @@ public class ClosestPairLogic {
         return sparsityConstant;
     }
 
-    //Points: Sorted set of points to the respectve coordinate axes
+    public ClosestPairLogicImpl(DividingStrategy divideStrat) {
+        this.divideStrat = divideStrat;
+
+    }
+
+    //Param: Points: Sorted set of points to the respectve coordinate axes
     public ClosestPair closestPair(List<List<Point>> points, String recursion) {
 
         checkSorting(points);
@@ -93,9 +106,6 @@ public class ClosestPairLogic {
     }
 
     private void checkSorting(List<List<Point>> points) {
-        // index 0 = x
-        // index 1 = y
-        // for x
         int numberOfsortedSets = points.size();
         for (int i = 0; i < numberOfsortedSets; i++) {
             List<Point> sortedSet = points.get(i);
@@ -136,43 +146,45 @@ public class ClosestPairLogic {
         }
     }
 
+    @Override
     public List[] dividePoints(List<List<Point>> points, int medianIndex) {
-        List<Point> pointsByX = points.get(0);
-        List<Point> pointsByY = points.get(1);
-
-        // Get the x set
-        List<Point> pointsByX_Left = new ArrayList<>();
-        List<Point> pointsByX_Right = new ArrayList<>();
-        for (Point point : pointsByX) {
-            if (point.getIndex() <= medianIndex) {
-                pointsByX_Left.add(point);
-            } else {
-                pointsByX_Right.add(point);
-            }
-        }
-
-        // Get the y set
-        List<Point> pointsByY_Left = new ArrayList<>();
-        List<Point> pointsByY_Right = new ArrayList<>();
-        for (Point point : pointsByY) {
-            if (point.getIndex() <= medianIndex) {
-                pointsByY_Left.add(point);
-            } else {
-                pointsByY_Right.add(point);
-            }
-        }
-
-        List<List<Point>> left = new ArrayList<>();
-        List<List<Point>> rigth = new ArrayList<>();
-        left.add(pointsByX_Left);
-        left.add(pointsByY_Left);
-        rigth.add(pointsByX_Right);
-        rigth.add(pointsByY_Right);
-
-        return new List[]{left, rigth};
+        return divideStrat.dividePoints(points, medianIndex);
+//        List<Point> pointsByX = points.get(0);
+//        List<Point> pointsByY = points.get(1);
+//
+//        // Get the x set
+//        List<Point> pointsByX_Left = new ArrayList<>();
+//        List<Point> pointsByX_Right = new ArrayList<>();
+//        for (Point point : pointsByX) {
+//            if (point.getIndex() <= medianIndex) {
+//                pointsByX_Left.add(point);
+//            } else {
+//                pointsByX_Right.add(point);
+//            }
+//        }
+//
+//        // Get the y set
+//        List<Point> pointsByY_Left = new ArrayList<>();
+//        List<Point> pointsByY_Right = new ArrayList<>();
+//        for (Point point : pointsByY) {
+//            if (point.getIndex() <= medianIndex) {
+//                pointsByY_Left.add(point);
+//            } else {
+//                pointsByY_Right.add(point);
+//            }
+//        }
+//
+//        List<List<Point>> left = new ArrayList<>();
+//        List<List<Point>> rigth = new ArrayList<>();
+//        left.add(pointsByX_Left);
+//        left.add(pointsByY_Left);
+//        rigth.add(pointsByX_Right);
+//        rigth.add(pointsByY_Right);
+//
+//        return new List[]{left, rigth};
     }
 
-    // For now it is only for 2d
+    @Override
     public List<List<Point>> presort(List<Point> points) {
         int X = 0;
         int Y = 1;

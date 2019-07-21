@@ -9,6 +9,7 @@ Do not focus on make it smart - just make it work.
 ## Phase 2
 Make Point class support that it can take any dimension
 Make the logic support this change to the Point.java
+--- DONE ---
 
 ## Phase 3 (compositional design phase)
 Put the the parts that have different approaches for each new dimension.
