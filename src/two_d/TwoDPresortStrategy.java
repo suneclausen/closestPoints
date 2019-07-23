@@ -2,6 +2,7 @@ package two_d;
 
 import interfaces.PresortStrategy;
 import mainComponents.Point;
+import mainComponents.Utility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +38,7 @@ public class TwoDPresortStrategy implements PresortStrategy {
         // set the index of the point of where it is in the x-sorted-list
         for (int i = 0; i < sortedByX.size(); i++) {
             Point p = sortedByX.get(i);
-            p.setIndex(i);
+            p.addIndex(i);
         }
 
         // Sort by y and keep the index
@@ -59,6 +60,8 @@ public class TwoDPresortStrategy implements PresortStrategy {
 
         returnList.add(sortedByX);
         returnList.add(sortedByY);
+
+        Utility.checkSorting(returnList);
 
         return returnList;
     }

@@ -1,7 +1,12 @@
 package mainComponents;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Point {
-    private int index;
+//    private int index;
+    private List<Integer> index;
     private double[] coordinates;
     private int dimension;
 
@@ -14,6 +19,7 @@ public class Point {
         }
 
         this.coordinates = coordinates;
+        this.index = new ArrayList<>();
     }
 
     public double[] getCoordinates() {
@@ -32,19 +38,26 @@ public class Point {
         this.dimension = dimension;
     }
 
-    public void setIndex(int index) {
+    public List<Integer> getIndex() {
+        return index;
+    }
+
+    public void setIndex(List<Integer> index) {
         this.index = index;
     }
 
-    public int getIndex() {
-        return index;
+    public void addIndex(int number) {
+        this.index.add(number);
+    }
+
+    public void removeIndexElement(int index) {
+        this.index.remove(index);
     }
 
     @Override
     public String toString() {
         return "Point{" +
-                "x=" + coordinates[0] +
-                ", y=" + coordinates[1] +
+                "coordinates=" + Arrays.toString(coordinates) +
                 ", index=" + index +
                 '}';
     }

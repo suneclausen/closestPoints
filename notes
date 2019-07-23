@@ -18,6 +18,8 @@ points of interest is:
    - presort
    - perhaps also slab traversal.
         - Check this out in next phase
+--- DONE ---
+
 
 ## Phase 4
 Make slow 3d algorithm in O(n lg^2 n) in the compositional architechture implemented in previous phase

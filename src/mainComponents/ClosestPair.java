@@ -23,6 +23,10 @@ public class ClosestPair {
         return distanceBetweenPoints;
     }
 
+    public void setDistanceBetweenPoints(double distanceBetweenPoints) {
+        this.distanceBetweenPoints = distanceBetweenPoints;
+    }
+
     @Override
     public String toString() {
         return "ClosestPair{" +

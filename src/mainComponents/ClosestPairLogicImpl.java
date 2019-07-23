@@ -5,12 +5,15 @@ import interfaces.ClosestPairLogic;
 import interfaces.DividingStrategy;
 import interfaces.PresortStrategy;
 import interfaces.SlabStrategy;
+import three_d_slow.ThreeDSlowDividingStrategy;
+import two_d.TwoDDividingStrategy;
 
 
 import java.util.*;
 
 public class ClosestPairLogicImpl implements ClosestPairLogic {
 
+    private final int dimension;
     private int sparsityConstant = 12;
 
     // Strategies
@@ -23,19 +26,26 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
         this.divideStrat = stratFactory.getDividePointsStrategy();
         this.presortStrat = stratFactory.getPresortStrategy();
         this.slabStrat = stratFactory.getSlabStrategy();
+
+        this.dimension = originalDimension;
     }
 
 
     //Param: Points: Sorted set of points to the respectve coordinate axes
     public ClosestPair closestPair(List<List<Point>> points, String recursion) {
-
-        checkSorting(points);
-
         int numberOfPoints = points.get(0).size();
 
         //stop condition
         if (numberOfPoints <= 3) {
+
             Point p1 = points.get(0).get(0);
+            if (numberOfPoints == 1) {
+                // When we only have 1 point we return a ClosestPair with a value so high that it will never be returned
+                ClosestPair infDist = new ClosestPair(p1, p1);
+                infDist.setDistanceBetweenPoints(Double.POSITIVE_INFINITY);
+                return infDist;
+            }
+
             Point p2 = points.get(0).get(1);
             if (numberOfPoints == 2) {
                 return new ClosestPair(p1, p2);
@@ -63,7 +73,17 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
         int medianIndex = (int) (Math.ceil(((double) numberOfPoints / 2)) - 1);
 
         // Divide points and call recursively getting a side A and B
-        List[] lists = dividePoints(points, points.get(0).get(medianIndex).getIndex());  //get the given index of the medianpoint at the median point index.
+        Integer medianIndexXValue; // TODO: denne værdi skifter ved 3D alt afhængig om du står i 3d eller 2d delen.
+        medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0); //get the given index of the medianpoint at the median point index. // TODO: oprindelige værdi.
+//        if (divideStrat.equals(new ThreeDSlowDividingStrategy())) {
+//            medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0); // TODO: Fix parametrisk løsning der er låst til 3d slow.
+//        } else if (divideStrat.equals(new TwoDDividingStrategy())) {
+//            medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(1);
+//        } else {
+//            medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0);
+//        }
+
+        List[] lists = dividePoints(points, medianIndexXValue);
         List<List<Point>> left = lists[0];
         List<List<Point>> right = lists[1];
         ClosestPair closestPairLeft = closestPair(left, recursion + "A");
@@ -75,7 +95,7 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
 
         // Build the slab
         double delta = currentClosestPair.getDistanceBetweenPoints();
-        List<Point> slab = slabStrat.buildSlab(points, delta, medianIndex);
+        List<List<Point>> slab = slabStrat.buildSlab(points, delta, medianIndex);
 
         // Traverse the slab
         currentClosestPair = slabStrat.traverseSlab(currentClosestPair, slab, this);
@@ -83,26 +103,6 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
         //return the currentClosestPoint
         return currentClosestPair;
     }
-
-    private void checkSorting(List<List<Point>> points) {
-        int numberOfsortedSets = points.size();
-        for (int i = 0; i < numberOfsortedSets; i++) {
-            List<Point> sortedSet = points.get(i);
-
-            int coordinateToLookAt = i; // is going to set the focus of coordiante. Such that first time it is x, then y etc. Assumes the points are given as (sortedByx, sortedByY, sortedByZ, .... )
-            for (int j = 1; j < sortedSet.size(); j++) {
-                Point previousPoint = sortedSet.get(j - 1);
-                Point currentPoint = sortedSet.get(j);
-
-                if (previousPoint.getCoordinates()[coordinateToLookAt] <= currentPoint.getCoordinates()[coordinateToLookAt]) {
-                    continue;
-                } else {
-                    throw new RuntimeException("The set was not sorted");
-                }
-            }
-        }
-    }
-
 
     // Find how many points to consider in a sorted order based on the sparsity constant and only considering the points from the slab.
     public List<Point> getPointsToConsider(List<Point> slab, int sparsityConstant, int index) {
@@ -138,5 +138,9 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
     @Override
     public List<List<Point>> presort(List<Point> points) {
         return presortStrat.presort(points);
+    }
+
+    public int getDimension() {
+        return dimension;
     }
 }

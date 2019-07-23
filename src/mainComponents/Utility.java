@@ -28,6 +28,26 @@ public class Utility {
         return Math.sqrt(temp);
     }
 
+    public static void checkSorting(List<List<Point>> points) {
+        int dimensionCoordinate = points.size();
+        for (int i = 0; i < dimensionCoordinate; i++) {
+            List<Point> sortedSet = points.get(i);
+
+            int coordinateToLookAt = i; // is going to set the focus of coordinate. Such that first time it is x, then y etc. Assumes the points are given as (sortedByx, sortedByY, sortedByZ, .... )
+            for (int j = 1; j < sortedSet.size(); j++) {
+                Point previousPoint = sortedSet.get(j - 1);
+                Point currentPoint = sortedSet.get(j);
+
+                if (previousPoint.getCoordinates()[coordinateToLookAt] <= currentPoint.getCoordinates()[coordinateToLookAt]) {
+                    continue;
+                } else {
+                    throw new RuntimeException("The set was not sorted");
+                }
+            }
+        }
+    }
+
+
     //TODO: Make more dynamic and generic
     public static List<Point> generateRandomPoints(int numberOfPoints, int upperBound, int dimension, boolean asInt) {
         Set<Point> points = new LinkedHashSet<>();
