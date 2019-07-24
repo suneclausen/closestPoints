@@ -73,22 +73,13 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
         int medianIndex = (int) (Math.ceil(((double) numberOfPoints / 2)) - 1);
 
         // Divide points and call recursively getting a side A and B
-        Integer medianIndexXValue; // TODO: denne værdi skifter ved 3D alt afhængig om du står i 3d eller 2d delen.
-        medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0); //get the given index of the medianpoint at the median point index. // TODO: oprindelige værdi.
-//        if (divideStrat.equals(new ThreeDSlowDividingStrategy())) {
-//            medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0); // TODO: Fix parametrisk løsning der er låst til 3d slow.
-//        } else if (divideStrat.equals(new TwoDDividingStrategy())) {
-//            medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(1);
-//        } else {
-//            medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0);
-//        }
+        Integer medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0); //get the given index of the medianpoint at the median point index.
 
         List[] lists = dividePoints(points, medianIndexXValue);
         List<List<Point>> left = lists[0];
         List<List<Point>> right = lists[1];
         ClosestPair closestPairLeft = closestPair(left, recursion + "A");
         ClosestPair closestPairRight = closestPair(right, recursion + "B");
-
 
         // Find which one is the minimum of A and B and set this as the closest pair seen so far
         ClosestPair currentClosestPair = setCurrentClosestPair(closestPairLeft, closestPairRight);
@@ -97,7 +88,7 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
         double delta = currentClosestPair.getDistanceBetweenPoints();
         List<List<Point>> slab = slabStrat.buildSlab(points, delta, medianIndex);
 
-        // Traverse the slab
+        // Traverse the slab - and compare the current closest pair and the potentiel closest pair in the slab and return this.
         currentClosestPair = slabStrat.traverseSlab(currentClosestPair, slab, this);
 
         //return the currentClosestPoint

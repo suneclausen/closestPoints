@@ -11,7 +11,7 @@ import java.util.List;
 public class ThreeDSlowPresortStrategy implements PresortStrategy {
     @Override
     public List<List<Point>> presort(List<Point> points) {
-        // Constants
+        // Constants indexes
         int X = 0;
         int Y = 1;
         int Z = 2;
@@ -65,8 +65,7 @@ public class ThreeDSlowPresortStrategy implements PresortStrategy {
         }
 
 
-        // Handle z
-        // Handle for y
+        // Handle for z
         pointsSortedByZ.addAll(pointsSortedByY);
         pointsSortedByZ.sort(new Comparator<Point>() {
             @Override

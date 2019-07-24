@@ -3,7 +3,7 @@ This algorithm is based on the paper "Divide-and-conquer in multidimensional spa
 
 
 ## The implementation
-The code have been implemented in Java in a compositional design where all the vriable behaviour/strategies have been put under interfaces and the relevant implementation made in a subpackage. For each dimension there will be a facotory, which will contain all the needed strategies for finding the closest pair of points in the given dimension. 
+The code have been implemented in Java in a compositional design where all the variable behaviour/strategies have been put under interfaces and the relevant implementation made in a subpackage. For each dimension there will be a facotory, which will contain all the needed strategies for finding the closest pair of points in the given dimension. 
 
 The main component/class is the /mainComponents/ClosestPairLogicImpl.java, where the main algorithm runs and uses the different factories given. 
 

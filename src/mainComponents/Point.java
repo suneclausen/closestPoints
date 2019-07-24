@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Point {
-//    private int index;
     private List<Integer> index;
     private double[] coordinates;
     private int dimension;

@@ -20,16 +20,21 @@ points of interest is:
         - Check this out in next phase
 --- DONE ---
 
+## Phase 3.1
+Consider making factories.
+--- DONE ---
 
 ## Phase 4
 Make slow 3d algorithm in O(n lg^2 n) in the compositional architechture implemented in previous phase
 Verify it
+--- DONE ---
 
 ## Phase 4.1
-Consider making factories.
+For the sake of the easiness of making any further strategies - implement 4d in compositional design
 
 ## Phase 5
 Make the fast algorithm in 3d supporting the design.
+    - This is the one that takes all the coordinate axis into consideration.
 
 ## Phase 5.1
 Make a k-dimensional implementation. (perhaps not possible without implementation 2d,3d,4d,...,k-1d, kd)

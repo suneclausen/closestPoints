@@ -4,7 +4,6 @@ import Factories.ThreeDSlowFactory;
 import Factories.TwoDFactory;
 import interfaces.ClosestPairLogic;
 
-import javax.rmi.CORBA.Util;
 import java.util.*;
 
 public class Driver {
@@ -61,14 +60,25 @@ public class Driver {
         List<List<Point>> lists = Utility.verifyAlgorithm(3, 200, 5000, 1000, new ThreeDSlowFactory());
         if (lists != null){
             System.out.println("points \n" + lists);
-            System.out.println();
-//            ClosestPair closestPair = logic.closestPair(lists, "TOP");
         }
     }
 
 
     public static void main(String[] args) {
-        test2d();
-        test3dSlow();
+        test2d();  // 2d in O(n lg n)
+        test3dSlow(); //3d-slow in O(n lg^2 n)
+
+//        bigNumberRun();
+
+    }
+
+    private static void bigNumberRun() {
+        ClosestPairLogic logic = new ClosestPairLogicImpl(3, new ThreeDSlowFactory());
+        System.out.println("Generating random points");
+        List<Point> randomPoints = Utility.generateRandomPoints(7000000, 1000000, 3, true); // by false to double
+
+        System.out.println("Testing for 7.000.000 points.");
+        ClosestPair result = logic.closestPair(logic.presort(randomPoints), "Top");
+        System.out.println("The final result\n" + result);
     }
 }

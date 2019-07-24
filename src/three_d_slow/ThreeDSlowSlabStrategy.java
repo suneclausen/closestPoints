@@ -13,7 +13,6 @@ import java.util.List;
 public class ThreeDSlowSlabStrategy implements SlabStrategy {
     @Override
     public List<List<Point>> buildSlab(List<List<Point>> points, double delta, int medianIndex) { //Remember the medianIndex is only the index and not the x-value of it
-        int dimension = points.size();
         List<List<Point>> slab = new ArrayList<>();
         List<Point> pointsSortedByY = points.get(1);
         List<Point> pointsSortedByZ = points.get(2);
@@ -31,7 +30,8 @@ public class ThreeDSlowSlabStrategy implements SlabStrategy {
 
     @Override
     public ClosestPair traverseSlab(ClosestPair currentClosestPair, List<List<Point>> slab, ClosestPairLogicImpl closestPairLogic) {
-        // Format the points to work in the projected dimension accordingly to the datastructure defined in this algorithm . Change indexes.
+        // Format the points to work in the projected dimension accordingly to the datastructure defined in this algorithm .
+        // Change indexes to have only one element, since this is expected in 2d. We make a copy of the slab such that the points from the 3d algorithm will still have all the index.
         List<List<Point>> slabCopy = slab;
         for (Point point : slabCopy.get(0)) {
             if (point.getIndex().size() > 1) {

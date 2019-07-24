@@ -28,6 +28,7 @@ public class Utility {
         return Math.sqrt(temp);
     }
 
+    // Check that the presorting and that the sorting through the algorithm is always done. Takes O(n)
     public static void checkSorting(List<List<Point>> points) {
         int dimensionCoordinate = points.size();
         for (int i = 0; i < dimensionCoordinate; i++) {
@@ -48,8 +49,9 @@ public class Utility {
     }
 
 
-    //TODO: Make more dynamic and generic
+    // Generate a given amount of random points to a specific dimension. Chooses whether or not it should be int- or double format. Return the point in a list.
     public static List<Point> generateRandomPoints(int numberOfPoints, int upperBound, int dimension, boolean asInt) {
+        // Make a set such that there will no be any douplicates.
         Set<Point> points = new LinkedHashSet<>();
 
         while (points.size() < numberOfPoints) {
@@ -63,9 +65,7 @@ public class Utility {
                 }
             }
             Point p = new Point(dimension, coordinate);
-//            System.out.println("new point added" + p +  " making the size of points to be " + points.size());
             points.add(p);
-//            System.out.println("Now" + points.size());
         }
 
         // Convert the hashSet into a lsit to make logic work.
@@ -76,6 +76,7 @@ public class Utility {
     }
 
 
+    // Brute force algorithm to find closest pair of points. Looks at all the possible pairs. Takes O(n^2)
     public static ClosestPair bruteforce(List<Point> points) {
         ClosestPair cp = new ClosestPair(points.get(0), points.get(1));
 
@@ -99,26 +100,25 @@ public class Utility {
         return cp;
     }
 
-    public static List<List<Point>> verifyAlgorithm(int dimension, int iterations, int maxNumberOfPoints, int upperBoudnValueForPoint, ClosestPairFactory stratFactory) {
-        // for know hardcoded to support 2d
+    // Verification algorithm. Compares the run of the ClosestPair method against bruteforce. We compare the distances, which should be equal to eachother.
+    // If not we return the current points that gave the mismatch to be used as a testcase.
+    public static List<List<Point>> verifyAlgorithm(int dimension, int iterations, int maxNumberOfPoints, int upperBoundValueForPoint, ClosestPairFactory stratFactory) {
         System.out.println("Verify algorithm");
-        ClosestPairLogicImpl logic = new ClosestPairLogicImpl(2, stratFactory);
+        ClosestPairLogicImpl logic = new ClosestPairLogicImpl(dimension, stratFactory);
 
         for (int i = 0; i < iterations; i++) {
             progressPercentage(i+1, iterations);
             int numberOfPoints = (int) (Math.random() * maxNumberOfPoints) + 2;
-            int upperBound = 1000; //for how big the numbers can be
 
-            List<Point> points = generateRandomPoints(numberOfPoints, upperBoudnValueForPoint, dimension, true);
+            List<Point> points = generateRandomPoints(numberOfPoints, upperBoundValueForPoint, dimension, true);
 
             ClosestPair bruteforce = bruteforce(points);
-            double dist = bruteforce.getDistanceBetweenPoints();
-
+            double bruteforceDistance = bruteforce.getDistanceBetweenPoints();
 
             List<List<Point>> presort = logic.presort(points);
             ClosestPair closestPair = logic.closestPair(presort, "TOP");
 
-            if (closestPair.getDistanceBetweenPoints() != dist) {
+            if (closestPair.getDistanceBetweenPoints() != bruteforceDistance) {
                 System.out.println("------ ERROR ------");
                 System.out.println("Bruteforce gave:" + bruteforce);
                 System.out.println("ClosestPair gave:" + closestPair);
