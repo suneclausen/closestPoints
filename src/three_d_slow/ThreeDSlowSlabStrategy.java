@@ -1,6 +1,6 @@
 package three_d_slow;
 
-import Factories.TwoDFactory;
+import factories.TwoDFactory;
 import interfaces.ClosestPairLogic;
 import interfaces.SlabStrategy;
 import mainComponents.ClosestPair;

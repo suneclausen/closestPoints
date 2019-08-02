@@ -1,10 +1,6 @@
 package mainComponents;
 
-import Factories.ClosestPairFactory;
-import Factories.TwoDFactory;
-import interfaces.DividingStrategy;
-import interfaces.PresortStrategy;
-import interfaces.SlabStrategy;
+import factories.ClosestPairFactory;
 
 import java.util.*;
 

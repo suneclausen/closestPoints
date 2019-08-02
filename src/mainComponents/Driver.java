@@ -1,7 +1,7 @@
 package mainComponents;
 
-import Factories.ThreeDSlowFactory;
-import Factories.TwoDFactory;
+import factories.ThreeDSlowFactory;
+import factories.TwoDFactory;
 import interfaces.ClosestPairLogic;
 
 import java.util.*;
