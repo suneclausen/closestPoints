@@ -1,4 +1,4 @@
-package three_d_slow;
+package three_d_fast;
 
 import interfaces.PresortStrategy;
 import mainComponents.Point;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class ThreeDSlowPresortStrategy implements PresortStrategy {
+public class ThreeDFastPresortStrategy implements PresortStrategy {
     @Override
     public List<List<Point>> presort(List<Point> points) {
         // Constants indexes
@@ -80,7 +80,44 @@ public class ThreeDSlowPresortStrategy implements PresortStrategy {
                 }
             }
         });
+        // set the index of the point of where it is in the z-sorted-list
+        for (int i = 0; i < pointsSortedByZ.size(); i++) {
+            Point p = pointsSortedByZ.get(i);
+            p.addIndex(i);
+        }
 
+        //Since we have the possibility to divide an arbitrary axis we need to have the x and y set to have the index of z as well.
+        pointsSortedByX.clear();
+        pointsSortedByX.addAll(pointsSortedByZ);
+        pointsSortedByX.sort(new Comparator<Point>() {
+            @Override
+            public int compare(Point p1, Point p2) {
+                int value = p1.getIndex().get(X) - p2.getIndex().get(X);
+                if (value < 0) {
+                    return -1;
+                } else if (value > 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+        pointsSortedByY.clear();
+        pointsSortedByY.addAll(pointsSortedByX);
+        pointsSortedByY.sort(new Comparator<Point>() {
+            @Override
+            public int compare(Point p1, Point p2) {
+                int value = p1.getIndex().get(Y) - p2.getIndex().get(Y);
+                if (value < 0) {
+                    return -1;
+                } else if (value > 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
 
         // All points will have a list of indexes as indexes for [x,y]... z is not needed since we only divide on x
         returnList.add(pointsSortedByX);

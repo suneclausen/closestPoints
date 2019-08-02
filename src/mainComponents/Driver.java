@@ -3,6 +3,7 @@ package mainComponents;
 import factories.ThreeDSlowFactory;
 import factories.TwoDFactory;
 import interfaces.ClosestPairLogic;
+import three_d_fast.ThreeDFastPresortStrategy;
 
 import java.util.*;
 
@@ -65,11 +66,21 @@ public class Driver {
 
 
     public static void main(String[] args) {
-        test2d();  // 2d in O(n lg n)
-        test3dSlow(); //3d-slow in O(n lg^2 n)
+//        test2d();  // 2d in O(n lg n)
+//        test3dSlow(); //3d-slow in O(n lg^2 n)
+        test3dFast();
 
 //        bigNumberRun();
 
+    }
+
+    private static void test3dFast() {
+        System.out.println("Testing the 3D-Slow implementation");
+//        ClosestPairLogic logic = new ClosestPairLogicImpl(3, new ThreeDSlowFactory());
+        List<Point> randomPoints = Utility.generateRandomPoints(10, 150, 3, true);
+
+        ThreeDFastPresortStrategy presortStrategy = new ThreeDFastPresortStrategy();
+        presortStrategy.presort(randomPoints);
     }
 
     private static void bigNumberRun() {
