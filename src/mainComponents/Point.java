@@ -1,11 +1,10 @@
 package mainComponents;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Point {
-    private List<Integer> index;
+//    private List<Integer> index;
+    private HashMap<String, Integer> index;
     private double[] coordinates;
     private int dimension;
 
@@ -18,7 +17,9 @@ public class Point {
         }
 
         this.coordinates = coordinates;
-        this.index = new ArrayList<>();
+        this.index = new HashMap<>();
+
+//        this.index = new ArrayList<>();
     }
 
     public double[] getCoordinates() {
@@ -37,21 +38,25 @@ public class Point {
         this.dimension = dimension;
     }
 
-    public List<Integer> getIndex() {
+    public HashMap<String, Integer> getIndex() {
         return index;
     }
 
-    public void setIndex(List<Integer> index) {
-        this.index = index;
+    public void setIndex(String coordinate, Integer index){
+        this.index.put(coordinate, index);
     }
 
-    public void addIndex(int number) {
-        this.index.add(number);
-    }
+//    public void setIndex(List<Integer> index) {
+//        this.index = index;
+//    }
 
-    public void removeIndexElement(int index) {
-        this.index.remove(index);
-    }
+//    public void addIndex(int number) {
+//        this.index.add(number);
+//    }
+
+//    public void removeIndexElement(int index) {
+//        this.index.remove(index);
+//    }
 
     @Override
     public String toString() {
@@ -64,7 +69,7 @@ public class Point {
     @Override
     protected Point clone() throws CloneNotSupportedException {
         Point clonedPoint = new Point(getDimension(), getCoordinates());
-        clonedPoint.setIndex(getIndex());
+//        clonedPoint.setIndex(getIndex()); //TODO: FIX!
         return clonedPoint;
 
     }

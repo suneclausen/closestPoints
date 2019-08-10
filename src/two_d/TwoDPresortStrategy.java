@@ -38,7 +38,8 @@ public class TwoDPresortStrategy implements PresortStrategy {
         // set the index of the point of where it is in the x-sorted-list
         for (int i = 0; i < sortedByX.size(); i++) {
             Point p = sortedByX.get(i);
-            p.addIndex(i);
+//            p.addIndex(i);
+            p.setIndex("x", i);
         }
 
         // Sort by y and keep the index

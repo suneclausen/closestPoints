@@ -91,14 +91,9 @@ public class Driver {
     public static void main(String[] args) {
 //        testCloning();
 
-
-
-
 //        test2d();  // 2d in O(n lg n)
 //        test3dSlow(); //3d-slow in O(n lg^2 n)
-        System.out.println("Isolated test 3: ");
-        testIsolated3();
-        System.out.println("");
+
 
         test3dFast();
 
@@ -106,6 +101,7 @@ public class Driver {
 
 //        testIsolated1();
 //        testIsolated2();
+//        testIsolated3();
     }
 
     private static void testCloning() {
@@ -133,6 +129,7 @@ public class Driver {
 
 
     private static void testIsolated1(){
+        System.out.println("Isolated test 1: ");
         Point p1 = new Point(3, new double[]{24,52,142});
         Point p3 = new Point(3, new double[]{54,46,38});
         Point p5 = new Point(3, new double[]{104,24,28});
@@ -157,6 +154,7 @@ public class Driver {
         System.out.println("CP " + topTest);
     }
     private static void testIsolated2(){
+        System.out.println("Isolated test 2: ");
         Point p1 = new Point(3, new double[]{12,92,42});
         Point p3 = new Point(3, new double[]{26,148,81});
         Point p5 = new Point(3, new double[]{30, 69, 129});
@@ -182,6 +180,7 @@ public class Driver {
     }
 
     private static void testIsolated3(){
+        System.out.println("Isolated test 3: ");
         Point p1 = new Point(3, new double[]{18,6,41});
         Point p3 = new Point(3, new double[]{91,62,116});
         Point p5 = new Point(3, new double[]{104,121,37});

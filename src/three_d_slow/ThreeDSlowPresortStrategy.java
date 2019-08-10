@@ -40,7 +40,8 @@ public class ThreeDSlowPresortStrategy implements PresortStrategy {
         // set the index of the point of where it is in the x-sorted-list
         for (int i = 0; i < pointsSortedByX.size(); i++) {
             Point p = pointsSortedByX.get(i);
-            p.addIndex(i);
+//            p.addIndex(i);
+            p.setIndex("x", i);
         }
 
         // Handle for y
@@ -61,7 +62,8 @@ public class ThreeDSlowPresortStrategy implements PresortStrategy {
         // set the index of the point of where it is in the y-sorted-list
         for (int i = 0; i < pointsSortedByY.size(); i++) {
             Point p = pointsSortedByY.get(i);
-            p.addIndex(i);
+//            p.addIndex(i);
+            p.setIndex("y", i);
         }
 
 

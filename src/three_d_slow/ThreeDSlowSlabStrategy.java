@@ -37,7 +37,7 @@ public class ThreeDSlowSlabStrategy implements SlabStrategy {
         slabCopy.addAll(slab);
         for (Point point : slabCopy.get(0)) {
             if (point.getIndex().size() > 1) {
-                point.removeIndexElement(0);
+//                point.removeIndexElement(0);
             }
         }
 

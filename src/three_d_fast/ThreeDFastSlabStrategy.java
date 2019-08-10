@@ -89,31 +89,31 @@ public class ThreeDFastSlabStrategy implements SlabStrategy {
     @Override
     public ClosestPair traverseSlab(ClosestPair currentClosestPair, List<List<Point>> slab, ClosestPairLogicImpl closestPairLogic, String splitAxis) {
 //        List<List<Point>> slabCopy = slab;
-        List<List<Point>> slabCopy = new ArrayList<>();
-        slabCopy.addAll(slab);
-        for (Point point : slabCopy.get(0)) {
-            if (point.getIndex().size() > 1) { //We project it down into 2d and solve it there, but we only expect it to have 1 index here.
-                if (splitAxis.equals("x")){
-                    point.removeIndexElement(0);
-                }else if(splitAxis.equals("y")){
-                    point.removeIndexElement(1);
-                }else if (splitAxis.equals("z")){
-                    point.removeIndexElement(2);
+//        List<List<Point>> slabCopy = new ArrayList<>();
+//        slabCopy.addAll(slab);
+//        for (Point point : slabCopy.get(0)) {
+//            if (point.getIndex().size() > 1) { //We project it down into 2d and solve it there, but we only expect it to have 1 index here.
+//                if (splitAxis.equals("x")){
+//                    point.removeIndexElement(0);
+//                }else if(splitAxis.equals("y")){
 //                    point.removeIndexElement(1);
-                }else {
-                    throw new RuntimeException("Something went wrong with what axis to split on. The axis does properly not exist. Given was: " + splitAxis);
-                }
-            }
-        }
+//                }else if (splitAxis.equals("z")){
+//                    point.removeIndexElement(2);
+////                    point.removeIndexElement(1);
+//                }else {
+//                    throw new RuntimeException("Something went wrong with what axis to split on. The axis does properly not exist. Given was: " + splitAxis);
+//                }
+//            }
+//        }
 
-        if (slabCopy.get(0).size() == 0){
+        if (slab.get(0).size() == 0){
             return currentClosestPair;
         }
 
         //TODO: Fix logic and make 2d strategies to support the logic for the 3d implementation.
         ClosestPairLogic cpTwoDLogic = new ClosestPairLogicImpl(closestPairLogic.getDimension(), new TwoDHelperFactory());
         ((ClosestPairLogicImpl) cpTwoDLogic).setSplitAxis(splitAxis);
-        ClosestPair cpFrom2d = cpTwoDLogic.closestPair(slabCopy, "3D-Fast-TOP");
+        ClosestPair cpFrom2d = cpTwoDLogic.closestPair(slab, "3D-Fast-TOP");
 
         if (cpFrom2d.getDistanceBetweenPoints() < currentClosestPair.getDistanceBetweenPoints()) {
             currentClosestPair = cpFrom2d;

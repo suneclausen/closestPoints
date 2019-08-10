@@ -20,86 +20,62 @@ public class TwoDHelperDivdingStrategy implements DividingStrategy {
         List<Point> y_left  = new ArrayList<>();
         List<Point> y_right = new ArrayList<>();
 
-        //TODO: Write better
-//        int medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0); //get the given index of the medianpoint at the median point index.
-//        medianIndex = medianIndexXValue;
+        if (splitAxis.equals("x")){
+            // Sorted x is the y coordinate of the points
+            // Sorted y is the z coordinate of the points
+            int median = pointsSortedByX.get(medianIndex).getIndex().get("y"); //get the given index of the medianpoint at the median point index.
+            medianIndex = median;
 
-//        String splitAxis = "x"; // TODO: Get splitaxis somehow.
+            for (Point point : pointsSortedByX) {
+                Integer xIndex = point.getIndex().get("y");
+                if (xIndex <= medianIndex){
+                    x_left.add(point);
+                }else {
+                    x_right.add(point);
+                }
+            }
 
-        //TODO: START
-        int medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(X); //get the given index of the medianpoint at the median point index.
-        medianIndex = medianIndexXValue;
-
-        for (Point point : pointsSortedByX) {
-            Integer xIndex = point.getIndex().get(X);
-            if (xIndex <= medianIndex){
-                x_left.add(point);
-            }else {
-                x_right.add(point);
+            for (Point point : pointsSortedByY) {
+                Integer xIndex = point.getIndex().get("y");
+                if (xIndex <= medianIndex){
+                    y_left.add(point);
+                }else {
+                    y_right.add(point);
+                }
             }
         }
+        if (splitAxis.equals("y") || splitAxis.equals("z")){
+            /*
+            if splitAxis == y
+                # Sorted x is the x coordinate of the points
+                # Sorted y is the z coordinate of the points
 
-        for (Point point : pointsSortedByY) {
-            Integer xIndex = point.getIndex().get(X);
-            if (xIndex <= medianIndex){
-                y_left.add(point);
-            }else {
-                y_right.add(point);
+            if splitAxis == z
+                # Sorted x is the x coordinate of the points
+                # Sorted y is the y coordinate of the points
+             */
+            //TODO: Write better
+            int median = points.get(0).get(medianIndex).getIndex().get("x"); //get the given index of the medianpoint at the median point index.
+            medianIndex = median;
+
+            for (Point point : pointsSortedByX) {
+                Integer xIndex = point.getIndex().get("x");
+                if (xIndex <= medianIndex){
+                    x_left.add(point);
+                }else {
+                    x_right.add(point);
+                }
+            }
+
+            for (Point point : pointsSortedByY) {
+                Integer xIndex = point.getIndex().get("x");
+                if (xIndex <= medianIndex){
+                    x_left.add(point);
+                }else {
+                    x_right.add(point);
+                }
             }
         }
-        // TODO: STOP
-
-//        if (splitAxis.equals("x")){
-//            //TODO: Write better
-//            // TODO: Might not work. Shall perhaps be just index x since ths logic removes one index each time.
-//            int medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(X); //get the given index of the medianpoint at the median point index.
-//            medianIndex = medianIndexXValue;
-//
-//            for (Point point : pointsSortedByX) {
-//                Integer xIndex = point.getIndex().get(X);
-//                if (xIndex <= medianIndex){
-//                    x_left.add(point);
-//                }else {
-//                    x_right.add(point);
-//                }
-//            }
-//
-//            for (Point point : pointsSortedByY) {
-//                Integer xIndex = point.getIndex().get(X);
-//                if (xIndex <= medianIndex){
-//                    y_left.add(point);
-//                }else {
-//                    y_right.add(point);
-//                }
-//            }
-//        }
-//        if (splitAxis.equals("y") || splitAxis.equals("z")){
-//            //TODO: Write better
-//            int medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(X); //get the given index of the medianpoint at the median point index.
-//            medianIndex = medianIndexXValue;
-//
-//            for (Point point : pointsSortedByX) {
-//                Integer xIndex = point.getIndex().get(X);
-//                if (xIndex <= medianIndex){
-//                    x_left.add(point);
-//                }else {
-//                    x_right.add(point);
-//                }
-//            }
-//
-//            for (Point point : pointsSortedByY) {
-//                Integer xIndex = point.getIndex().get(X);
-//                if (xIndex <= medianIndex){
-//                    x_left.add(point);
-//                }else {
-//                    x_right.add(point);
-//                }
-//            }
-//
-//        }
-//        if (splitAxis.equals("z")){
-//
-//        }
 
 
         List<List<Point>> left = new ArrayList<>();

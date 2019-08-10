@@ -40,7 +40,8 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         // set the index of the point of where it is in the x-sorted-list
         for (int i = 0; i < pointsSortedByX.size(); i++) {
             Point p = pointsSortedByX.get(i);
-            p.addIndex(i);
+//            p.addIndex(i);
+            p.setIndex("x", i);
         }
 
         // Handle for y
@@ -61,7 +62,8 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         // set the index of the point of where it is in the y-sorted-list
         for (int i = 0; i < pointsSortedByY.size(); i++) {
             Point p = pointsSortedByY.get(i);
-            p.addIndex(i);
+//            p.addIndex(i);
+            p.setIndex("y", i);
         }
 
 
@@ -83,7 +85,8 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         // set the index of the point of where it is in the z-sorted-list
         for (int i = 0; i < pointsSortedByZ.size(); i++) {
             Point p = pointsSortedByZ.get(i);
-            p.addIndex(i);
+//            p.addIndex(i);
+            p.setIndex("z", i);
         }
 
         //Since we have the possibility to divide an arbitrary axis we need to have the x and y set to have the index of z as well.
@@ -92,7 +95,8 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         pointsSortedByX.sort(new Comparator<Point>() {
             @Override
             public int compare(Point p1, Point p2) {
-                int value = p1.getIndex().get(X) - p2.getIndex().get(X);
+//                int value = p1.getIndex().get(X) - p2.getIndex().get(X);
+                int value = p1.getIndex().get("x") - p2.getIndex().get("x");
                 if (value < 0) {
                     return -1;
                 } else if (value > 0) {
@@ -108,7 +112,8 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         pointsSortedByY.sort(new Comparator<Point>() {
             @Override
             public int compare(Point p1, Point p2) {
-                int value = p1.getIndex().get(Y) - p2.getIndex().get(Y);
+//                int value = p1.getIndex().get(Y) - p2.getIndex().get(Y);
+                int value = p1.getIndex().get("y") - p2.getIndex().get("y");
                 if (value < 0) {
                     return -1;
                 } else if (value > 0) {

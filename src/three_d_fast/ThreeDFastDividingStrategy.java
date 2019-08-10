@@ -105,13 +105,13 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
             medianIndex = 0;
             for (int i = 0; i < pointsSortedByX.size(); i++) {
                 if (pointsSortedByX.get(i).getCoordinates()[X] > medianValue) {
-                    medianIndex = pointsSortedByX.get(i-1).getIndex().get(X);
+                    medianIndex = pointsSortedByX.get(i-1).getIndex().get("x");
                     break;
                 }
             }
 
             for (Point point : pointsSortedByX) {
-                int indexValue = point.getIndex().get(X);
+                int indexValue = point.getIndex().get("x");
                 if (indexValue <= medianIndex){
                     x_left.add(point);
                 }else{
@@ -119,7 +119,7 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
                 }
             }
             for (Point point : pointsSortedByY) {
-                int indexValue = point.getIndex().get(X);
+                int indexValue = point.getIndex().get("x");
                 if (indexValue <= medianIndex){
                     y_left.add(point);
                 }else{
@@ -127,7 +127,7 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
                 }
             }
             for (Point point : pointsSortedByZ) {
-                int indexValue = point.getIndex().get(X);
+                int indexValue = point.getIndex().get("x");
                 if (indexValue <= medianIndex){
                     z_left.add(point);
                 }else{
@@ -141,13 +141,13 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
             medianIndex = 0;
             for (int i = 0; i < pointsSortedByY.size(); i++) {
                 if (pointsSortedByY.get(i).getCoordinates()[Y] > medianValue) {
-                    medianIndex = pointsSortedByY.get(i-1).getIndex().get(Y);
+                    medianIndex = pointsSortedByY.get(i-1).getIndex().get("y");
                     break;
                 }
             }
 
             for (Point point : pointsSortedByX) {
-                int indexValue = point.getIndex().get(Y);
+                int indexValue = point.getIndex().get("y");
                 if (indexValue <= medianIndex){
                     x_left.add(point);
                 }else{
@@ -155,7 +155,7 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
                 }
             }
             for (Point point : pointsSortedByY) {
-                int indexValue = point.getIndex().get(Y);
+                int indexValue = point.getIndex().get("y");
                 if (indexValue <= medianIndex){
                     y_left.add(point);
                 }else{
@@ -163,7 +163,7 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
                 }
             }
             for (Point point : pointsSortedByZ) {
-                int indexValue = point.getIndex().get(Y);
+                int indexValue = point.getIndex().get("y");
                 if (indexValue <= medianIndex){
                     z_left.add(point);
                 }else{
@@ -177,13 +177,13 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
             medianIndex = 0;
             for (int i = 0; i < pointsSortedByZ.size(); i++) {
                 if (pointsSortedByZ.get(i).getCoordinates()[Z] > medianValue) {
-                    medianIndex = pointsSortedByZ.get(i-1).getIndex().get(Z);
+                    medianIndex = pointsSortedByZ.get(i-1).getIndex().get("z");
                     break;
                 }
             }
 
             for (Point point : pointsSortedByX) {
-                int indexValue = point.getIndex().get(Z);
+                int indexValue = point.getIndex().get("z");
                 if (indexValue <= medianIndex){
                     x_left.add(point);
                 }else{
@@ -191,7 +191,7 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
                 }
             }
             for (Point point : pointsSortedByY) {
-                int indexValue = point.getIndex().get(Z);
+                int indexValue = point.getIndex().get("z");
                 if (indexValue <= medianIndex){
                     y_left.add(point);
                 }else{
@@ -199,7 +199,7 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
                 }
             }
             for (Point point : pointsSortedByZ) {
-                int indexValue = point.getIndex().get(Z);
+                int indexValue = point.getIndex().get("z");
                 if (indexValue <= medianIndex){
                     z_left.add(point);
                 }else{
