@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TwoDSlabStrategy implements SlabStrategy {
     @Override
-    public List<List<Point>> buildSlab(List<List<Point>> points, double delta, int medianIndex) {
+    public List<List<Point>> buildSlab(List<List<Point>> points, double delta, int medianIndex, String splitAxis, List<Point> cutList) {
         List<List<Point>> returnList = new ArrayList<>();
         List<Point> slab = new ArrayList<>();
         List<Point> pointsSortedByY = points.get(1);
@@ -28,7 +28,7 @@ public class TwoDSlabStrategy implements SlabStrategy {
     }
 
     @Override
-    public ClosestPair traverseSlab(ClosestPair currentClosestPair, List<List<Point>> slab, ClosestPairLogicImpl closestPairLogic) {
+    public ClosestPair traverseSlab(ClosestPair currentClosestPair, List<List<Point>> slab, ClosestPairLogicImpl closestPairLogic, String splitAxis) {
         int sparsityConstant = closestPairLogic.getSparsityConstant();
         List<Point> theSlab = slab.get(0);  // get(0) is because the slab in 2D only contains one list
         int numberOfSlabPoints = theSlab.size();

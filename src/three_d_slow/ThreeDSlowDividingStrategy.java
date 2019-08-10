@@ -9,10 +9,14 @@ import java.util.List;
 public class ThreeDSlowDividingStrategy implements DividingStrategy {
 
     @Override
-    public List[] dividePoints(List<List<Point>> points, int medianIndex) {
+    public List[] dividePoints(List<List<Point>> points, int medianIndex, String splitAxis) {
         List<Point> pointsByX = points.get(0);
         List<Point> pointsByY = points.get(1);
         List<Point> pointsByZ = points.get(2);
+
+        // TODO: Write better.
+        int medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0); //get the given index of the medianpoint at the median point index.
+        medianIndex = medianIndexXValue;
 
         // Get the x set
         List<Point> pointsByX_Left = new ArrayList<>();

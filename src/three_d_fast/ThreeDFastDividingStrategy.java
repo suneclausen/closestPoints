@@ -7,8 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThreeDFastDividingStrategy implements DividingStrategy {
+    private List<Point> cutList = new ArrayList<>();
+    private String splitAxis = "";
+
+    public String getSplitAxis() {
+        return splitAxis;
+    }
+
+    public List<Point> getCutList() {
+        return cutList;
+    }
+
     @Override
-    public List[] dividePoints(List<List<Point>> points, int medianIndex) {
+    public List[] dividePoints(List<List<Point>> points, int medianIndex, String splitAxis) {
         // Constants
         int X = 0;
         int Y = 1;
@@ -34,7 +45,7 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
         double n = (double) points.get(0).size();
 
         // Points of interest.
-        double rulerSize = k * c * Math.pow(n, (1-(1/k)));
+        double rulerSize = Math.ceil(k * c * Math.pow(n, (1-(1/k))));
 
         // We have to make sure that there is at least n/4k points on one of the sides.
         double pointsToLeaveOut = Math.ceil(n / (4 * k));
@@ -42,7 +53,7 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
         // Variables to mutate
         double distance = 0;
         List<Point> lst = null;
-        String splitAxis = null;
+//        String splitAxis = null;
         
         // Go through each of the axis ans project all the points and find the set that gives the biggest beteen kcn^{1-1/k} points. 
         // For the x-axis
@@ -51,10 +62,11 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
             double bufferDistance = pointsSortedByX.get(end_index).getCoordinates()[X] - pointsSortedByX.get(i).getCoordinates()[X] ;
             if (bufferDistance > distance){
                 distance = bufferDistance;
-                List<Point> cutList = new ArrayList<>();
-                cutList.addAll(pointsSortedByX);
-                lst = cutList.subList(i, end_index + 1);
-                splitAxis = "x";
+                this.cutList.clear();
+                this.cutList.addAll(pointsSortedByX);
+//                lst = cutList.subList(i, end_index + 1);
+                this.cutList = this.cutList.subList(i, end_index + 1); //TODO: Maybe this
+                this.splitAxis = "x";
             }
         }
 
@@ -64,10 +76,10 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
             double bufferDistance = pointsSortedByY.get(end_index).getCoordinates()[Y] - pointsSortedByY.get(i).getCoordinates()[Y] ;
             if (bufferDistance > distance){
                 distance = bufferDistance;
-                List<Point> cutList = new ArrayList<>();
-                cutList.addAll(pointsSortedByY);
-                lst = cutList.subList(i, end_index + 1);
-                splitAxis = "y";
+                this.cutList.clear();
+                this.cutList.addAll(pointsSortedByY);
+                this.cutList = this.cutList.subList(i, end_index + 1); //TODO: Maybe this
+                this.splitAxis = "y";
             }
         }
 
@@ -77,21 +89,23 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
             double bufferDistance = pointsSortedByZ.get(end_index).getCoordinates()[Z] - pointsSortedByZ.get(i).getCoordinates()[Z] ;
             if (bufferDistance > distance){
                 distance = bufferDistance;
-                List<Point> cutList = new ArrayList<>();
-                cutList.addAll(pointsSortedByZ);
-                lst = cutList.subList(i, end_index + 1);
-                splitAxis = "z";
+//                List<Point> cutList = new ArrayList<>();
+                this.cutList.clear();
+                this.cutList.addAll(pointsSortedByZ);
+//                lst = cutList.subList(i, end_index + 1);
+                this.cutList = this.cutList.subList(i, end_index + 1); //TODO: Maybe this
+                this.splitAxis = "z";
             }
         }
 
         // We have now found the splitaxis and the kcn^{1-1/k} points within
         // Now we need to split the points accordingly to the split axis
-        if (splitAxis.equals("x")){
-            double medianValue = (lst.get(0).getCoordinates()[X] + lst.get(lst.size()-1).getCoordinates()[X]) / 2;
+        if (this.splitAxis.equals("x")){
+            double medianValue = (cutList.get(0).getCoordinates()[X] + cutList.get(cutList.size()-1).getCoordinates()[X]) / 2;
             medianIndex = 0;
-            for (Point point : pointsSortedByX) {
-                if (point.getCoordinates()[X] > medianValue){
-                    medianIndex = point.getIndex().get(X);
+            for (int i = 0; i < pointsSortedByX.size(); i++) {
+                if (pointsSortedByX.get(i).getCoordinates()[X] > medianValue) {
+                    medianIndex = pointsSortedByX.get(i-1).getIndex().get(X);
                     break;
                 }
             }
@@ -122,12 +136,12 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
             }
         }
 
-        if (splitAxis.equals("y")){
-            double medianValue = (lst.get(0).getCoordinates()[Y] + lst.get(lst.size()-1).getCoordinates()[Y]) / 2;
+        if (this.splitAxis.equals("y")){
+            double medianValue = (cutList.get(0).getCoordinates()[Y] + cutList.get(cutList.size()-1).getCoordinates()[Y]) / 2;
             medianIndex = 0;
-            for (Point point : pointsSortedByY) {
-                if (point.getCoordinates()[Y] > medianValue){
-                    medianIndex = point.getIndex().get(Y);
+            for (int i = 0; i < pointsSortedByY.size(); i++) {
+                if (pointsSortedByY.get(i).getCoordinates()[Y] > medianValue) {
+                    medianIndex = pointsSortedByY.get(i-1).getIndex().get(Y);
                     break;
                 }
             }
@@ -158,12 +172,12 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
             }
         }
 
-        if (splitAxis.equals("z")){
-            double medianValue = (lst.get(0).getCoordinates()[Z] + lst.get(lst.size()-1).getCoordinates()[Z]) / 2;
+        if (this.splitAxis.equals("z")){
+            double medianValue = (cutList.get(0).getCoordinates()[Z] + cutList.get(cutList.size()-1).getCoordinates()[Z]) / 2;
             medianIndex = 0;
-            for (Point point : pointsSortedByZ) {
-                if (point.getCoordinates()[Z] > medianValue){
-                    medianIndex = point.getIndex().get(Z);
+            for (int i = 0; i < pointsSortedByZ.size(); i++) {
+                if (pointsSortedByZ.get(i).getCoordinates()[Z] > medianValue) {
+                    medianIndex = pointsSortedByZ.get(i-1).getIndex().get(Z);
                     break;
                 }
             }
@@ -176,7 +190,7 @@ public class ThreeDFastDividingStrategy implements DividingStrategy {
                     x_right.add(point);
                 }
             }
-            for (Point point : pointsSortedByZ) {
+            for (Point point : pointsSortedByY) {
                 int indexValue = point.getIndex().get(Z);
                 if (indexValue <= medianIndex){
                     y_left.add(point);

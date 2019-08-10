@@ -22,7 +22,7 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         List<Point> pointsSortedByZ = new ArrayList<>();
 
         //Handle x
-        pointsSortedByX = points;
+        pointsSortedByX.addAll(points);
         pointsSortedByX.sort(new Comparator<Point>() {
             @Override
             public int compare(Point p1, Point p2) {

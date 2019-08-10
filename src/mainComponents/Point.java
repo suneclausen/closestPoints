@@ -13,7 +13,7 @@ public class Point {
         this.dimension = dimension;
 
         if (dimension != coordinates.length){
-            throw new RuntimeException("There was a mismatch between the dimension and the coordiantes given. " +
+            throw new RuntimeException("There was a mismatch between the dimension and the coordinates given. " +
                     "The dimension given was: " + dimension +  ". The dimension of the coordinates was: " + coordinates.length);
         }
 
@@ -59,5 +59,13 @@ public class Point {
                 "coordinates=" + Arrays.toString(coordinates) +
                 ", index=" + index +
                 '}';
+    }
+
+    @Override
+    protected Point clone() throws CloneNotSupportedException {
+        Point clonedPoint = new Point(getDimension(), getCoordinates());
+        clonedPoint.setIndex(getIndex());
+        return clonedPoint;
+
     }
 }
