@@ -1,6 +1,7 @@
 package three_d_slow;
 
 import interfaces.DividingStrategy;
+import mainComponents.DividingValuesHelper;
 import mainComponents.Point;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 public class ThreeDSlowDividingStrategy implements DividingStrategy {
 
     @Override
-    public List[] dividePoints(List<List<Point>> points, int medianIndex, String splitAxis) {
+    public DividingValuesHelper dividePoints(List<List<Point>> points, int medianIndex, String splitAxis) {
         List<Point> pointsByX = points.get(0);
         List<Point> pointsByY = points.get(1);
         List<Point> pointsByZ = points.get(2);
@@ -62,6 +63,7 @@ public class ThreeDSlowDividingStrategy implements DividingStrategy {
         right.add(pointsByY_Right);
         right.add(pointsByZ_Right);
 
-        return new List[]{left, right};
+//        return new List[]{left, right};
+        return new DividingValuesHelper(left,right);
     }
 }

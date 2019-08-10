@@ -1,6 +1,7 @@
 package three_d_fast.two_d_helper_for_fast_3d;
 
 import interfaces.DividingStrategy;
+import mainComponents.DividingValuesHelper;
 import mainComponents.Point;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class TwoDHelperDivdingStrategy implements DividingStrategy {
     @Override
-    public List[] dividePoints(List<List<Point>> points, int medianIndex, String splitAxis) {
+    public DividingValuesHelper dividePoints(List<List<Point>> points, int medianIndex, String splitAxis) {
         // Constants
         int X = 0;
         int Y = 1;
@@ -87,6 +88,9 @@ public class TwoDHelperDivdingStrategy implements DividingStrategy {
         right.add(x_right);
         right.add(y_right);
 
-        return new List[]{left, right};
+//        return new List[]{left, right};
+        DividingValuesHelper returnObject = new DividingValuesHelper(left, right);
+        returnObject.setSplitAxis(splitAxis);
+        return returnObject;
     }
 }

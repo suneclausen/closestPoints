@@ -1,6 +1,7 @@
 package two_d;
 
 import interfaces.DividingStrategy;
+import mainComponents.DividingValuesHelper;
 import mainComponents.Point;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class TwoDDividingStrategy implements DividingStrategy {
     @Override
-    public List[] dividePoints(List<List<Point>> points, int medianIndex, String splitAxis) {
+    public DividingValuesHelper dividePoints(List<List<Point>> points, int medianIndex, String splitAxis) {
         List<Point> pointsByX = points.get(0);
         List<Point> pointsByY = points.get(1);
 
@@ -46,6 +47,7 @@ public class TwoDDividingStrategy implements DividingStrategy {
         rigth.add(pointsByX_Right);
         rigth.add(pointsByY_Right);
 
-        return new List[]{left, rigth};
+//        return new List[]{left, rigth};
+        return new DividingValuesHelper(left, rigth);
     }
 }

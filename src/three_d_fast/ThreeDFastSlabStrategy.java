@@ -47,14 +47,14 @@ public class ThreeDFastSlabStrategy implements SlabStrategy {
             double medianValue = (cutList.get(0).getCoordinates()[Y] + cutList.get(cutList.size()-1).getCoordinates()[Y]) / 2;
 
             for (Point point: pointsSortedByX) {
-                double pointValue = point.getCoordinates()[X];
+                double pointValue = point.getCoordinates()[Y];
                 if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
                     slabOne.add(point);
                 }
             }
 
             for (Point point : pointsSortedByZ) {
-                double pointValue = point.getCoordinates()[X];
+                double pointValue = point.getCoordinates()[Y];
                 if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
                     slabTwo.add(point);
                 }
@@ -66,14 +66,14 @@ public class ThreeDFastSlabStrategy implements SlabStrategy {
             double medianValue = (cutList.get(0).getCoordinates()[Z] + cutList.get(cutList.size()-1).getCoordinates()[Z]) / 2;
 
             for (Point point: pointsSortedByX) {
-                double pointValue = point.getCoordinates()[X];
+                double pointValue = point.getCoordinates()[Z];
                 if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
                     slabOne.add(point);
                 }
             }
 
             for (Point point : pointsSortedByY) {
-                double pointValue = point.getCoordinates()[X];
+                double pointValue = point.getCoordinates()[Z];
                 if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
                     slabTwo.add(point);
                 }
