@@ -70,9 +70,9 @@ public class TwoDHelperDivdingStrategy implements DividingStrategy {
             for (Point point : pointsSortedByY) {
                 Integer xIndex = point.getIndex().get("x");
                 if (xIndex <= medianIndex){
-                    x_left.add(point);
+                    y_left.add(point);
                 }else {
-                    x_right.add(point);
+                    y_right.add(point);
                 }
             }
         }

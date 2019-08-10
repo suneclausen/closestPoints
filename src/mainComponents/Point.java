@@ -66,6 +66,11 @@ public class Point {
                 '}';
     }
 
+//    @Override
+//    public String toString() {
+//        return "new Point(3, new double[]" + Arrays.toString(coordinates) +")";
+//    }
+
     @Override
     protected Point clone() throws CloneNotSupportedException {
         Point clonedPoint = new Point(getDimension(), getCoordinates());
