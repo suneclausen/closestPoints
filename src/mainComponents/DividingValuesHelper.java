@@ -3,6 +3,11 @@ package mainComponents;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class works as a box containing all the information that can be provided by a dividing strategies and it return values
+ * It must contain the left side and right side of the divided points divided by a separating line through the data.
+ * Additionally splitaxis and the cutlist that contains the kcn^{1-1/k} points that defines the cutlist can be added as well. - Only for fast implementation.
+ */
 public class DividingValuesHelper {
     private List<List<Point>> left;
     private List<List<Point>> right;

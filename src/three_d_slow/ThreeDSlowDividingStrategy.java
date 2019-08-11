@@ -15,15 +15,13 @@ public class ThreeDSlowDividingStrategy implements DividingStrategy {
         List<Point> pointsByY = points.get(1);
         List<Point> pointsByZ = points.get(2);
 
-        // TODO: Write better.
-        int medianIndexXValue = points.get(0).get(medianIndex).getIndex().get("x"); //get the given index of the medianpoint at the median point index.
-        medianIndex = medianIndexXValue;
+        int median = points.get(0).get(medianIndex).getIndex().get("x"); //get the given index of the medianpoint at the median point index.
 
         // Get the x set
         List<Point> pointsByX_Left = new ArrayList<>();
         List<Point> pointsByX_Right = new ArrayList<>();
         for (Point point : pointsByX) {
-            if (point.getIndex().get("x") <= medianIndex) { //get(0) gets the index of x
+            if (point.getIndex().get("x") <= median) {
                 pointsByX_Left.add(point);
             } else {
                 pointsByX_Right.add(point);
@@ -34,7 +32,7 @@ public class ThreeDSlowDividingStrategy implements DividingStrategy {
         List<Point> pointsByY_Left = new ArrayList<>();
         List<Point> pointsByY_Right = new ArrayList<>();
         for (Point point : pointsByY) {
-            if (point.getIndex().get("x") <= medianIndex) { //get(0) gets the index of x
+            if (point.getIndex().get("x") <= median) {
                 pointsByY_Left.add(point);
             } else {
                 pointsByY_Right.add(point);
@@ -45,7 +43,7 @@ public class ThreeDSlowDividingStrategy implements DividingStrategy {
         List<Point> pointsByZ_Left = new ArrayList<>();
         List<Point> pointsByZ_Right = new ArrayList<>();
         for (Point point : pointsByZ) {
-            if (point.getIndex().get("x") <= medianIndex) { //get(0) gets the index of x
+            if (point.getIndex().get("x") <= median) {
                 pointsByZ_Left.add(point);
             } else {
                 pointsByZ_Right.add(point);
@@ -63,7 +61,6 @@ public class ThreeDSlowDividingStrategy implements DividingStrategy {
         right.add(pointsByY_Right);
         right.add(pointsByZ_Right);
 
-//        return new List[]{left, right};
-        return new DividingValuesHelper(left,right);
+        return new DividingValuesHelper(left, right);
     }
 }

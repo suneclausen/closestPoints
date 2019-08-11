@@ -11,14 +11,6 @@ public class ClosestPair {
         this.distanceBetweenPoints = Utility.distance(point1, point2);
     }
 
-    public Point getPoint1() {
-        return point1;
-    }
-
-    public Point getPoint2() {
-        return point2;
-    }
-
     public double getDistanceBetweenPoints() {
         return distanceBetweenPoints;
     }

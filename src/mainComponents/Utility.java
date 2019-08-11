@@ -35,9 +35,7 @@ public class Utility {
                 Point previousPoint = sortedSet.get(j - 1);
                 Point currentPoint = sortedSet.get(j);
 
-                if (previousPoint.getCoordinates()[coordinateToLookAt] <= currentPoint.getCoordinates()[coordinateToLookAt]) {
-                    continue;
-                } else {
+                if (previousPoint.getCoordinates()[coordinateToLookAt] > currentPoint.getCoordinates()[coordinateToLookAt]) {
                     throw new RuntimeException("The set was not sorted");
                 }
             }
@@ -64,7 +62,7 @@ public class Utility {
             points.add(p);
         }
 
-        // Convert the hashSet into a lsit to make logic work.
+        // Convert the hashSet into a list to make logic work.
         List<Point> returnList = new ArrayList<>();
         returnList.addAll(points);
 
@@ -79,11 +77,11 @@ public class Utility {
         for (int i = 0; i < points.size(); i++) {
             Point currentPoint = points.get(i);
             for (int j = 0; j < points.size(); j++) {
-                if (i == j){ // it is the same point
+                if (i == j) { // it is the same point
                     continue;
                 }
                 Point comparePoint = points.get(j);
-                if (comparePoint.getCoordinates().equals(currentPoint.getCoordinates())){
+                if (comparePoint.getCoordinates().equals(currentPoint.getCoordinates())) {
                     // it is then the same point... Should not happen, since dataset will not then be sparse
                     continue;
                 }
@@ -103,7 +101,7 @@ public class Utility {
         ClosestPairLogicImpl logic = new ClosestPairLogicImpl(dimension, stratFactory);
 
         for (int i = 0; i < iterations; i++) {
-            progressPercentage(i+1, iterations);
+            progressPercentage(i + 1, iterations);
             int numberOfPoints = (int) (Math.random() * maxNumberOfPoints) + 2;
 
             List<Point> points = generateRandomPoints(numberOfPoints, upperBoundValueForPoint, dimension, true);
@@ -120,7 +118,6 @@ public class Utility {
                 System.out.println("ClosestPair gave:" + closestPair);
                 return presort;
             }
-
         }
         return null;
     }
