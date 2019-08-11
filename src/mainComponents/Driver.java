@@ -4,10 +4,6 @@ import factories.ThreeDFastFactory;
 import factories.ThreeDSlowFactory;
 import factories.TwoDFactory;
 import interfaces.ClosestPairLogic;
-import three_d_fast.ThreeDFastDividingStrategy;
-import three_d_fast.ThreeDFastPresortStrategy;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Driver {
@@ -187,12 +183,12 @@ public class Driver {
     private static void testIsolated4() {
         System.out.println("Isolated test 4: ");
 
-        Point p1 = new Point(3, new double[]{ 64.0, 57.0, 132.0});
-        Point p2 = new Point(3, new double[]{ 51.0, 43.0, 44.0});
-        Point p3 = new Point(3, new double[]{ 79.0, 31.0, 16.0});
-        Point p5 = new Point(3, new double[]{ 116.0, 67.0, 140.0});
-        Point p4 =  new Point(3, new double[]{ 135.0, 130.0, 84.0});
-        Point p6 =  new Point(3, new double[]{ 85.0, 74.0, 32.0});
+        Point p1 = new Point(3, new double[]{64.0, 57.0, 132.0});
+        Point p2 = new Point(3, new double[]{51.0, 43.0, 44.0});
+        Point p3 = new Point(3, new double[]{79.0, 31.0, 16.0});
+        Point p5 = new Point(3, new double[]{116.0, 67.0, 140.0});
+        Point p4 = new Point(3, new double[]{135.0, 130.0, 84.0});
+        Point p6 = new Point(3, new double[]{85.0, 74.0, 32.0});
 
         ArrayList<Point> points = new ArrayList<>();
         points.add(p1);
@@ -213,10 +209,10 @@ public class Driver {
 
     private static void testIsolated5() {
         System.out.println("Isolated test 5: ");
-        Point p1 = new Point(3, new double[]{ 20,60,81});
-        Point p2 = new Point(3, new double[]{ 23,43,45});
-        Point p3 = new Point(3, new double[]{ 24,61,60});
-        Point p4 =  new Point(3, new double[]{ 88,59,78});
+        Point p1 = new Point(3, new double[]{20, 60, 81});
+        Point p2 = new Point(3, new double[]{23, 43, 45});
+        Point p3 = new Point(3, new double[]{24, 61, 60});
+        Point p4 = new Point(3, new double[]{88, 59, 78});
 
 
         ArrayList<Point> points = new ArrayList<>();
@@ -236,13 +232,13 @@ public class Driver {
 
     private static void testIsolated6() {
         System.out.println("Isolated test 6: ");
-        Point p1 = new Point(3, new double[]{ 18,8,74});
-        Point p2 = new Point(3, new double[]{ 26,49,10});
-        Point p3 = new Point(3, new double[]{ 28,73,99});
-        Point p4 =  new Point(3, new double[]{ 51,40,9});
-        Point p5 =  new Point(3, new double[]{ 56,63,37});
-        Point p6 =  new Point(3, new double[]{ 62,31,28});
-        Point p7 =  new Point(3, new double[]{ 99,30,76});
+        Point p1 = new Point(3, new double[]{18, 8, 74});
+        Point p2 = new Point(3, new double[]{26, 49, 10});
+        Point p3 = new Point(3, new double[]{28, 73, 99});
+        Point p4 = new Point(3, new double[]{51, 40, 9});
+        Point p5 = new Point(3, new double[]{56, 63, 37});
+        Point p6 = new Point(3, new double[]{62, 31, 28});
+        Point p7 = new Point(3, new double[]{99, 30, 76});
 
 
         ArrayList<Point> points = new ArrayList<>();
@@ -265,13 +261,13 @@ public class Driver {
 
     private static void testIsolated7() {
         System.out.println("Isolated test 7: ");
-        Point p1 = new Point(3, new double[]{ 21,11,81});
-        Point p2 = new Point(3, new double[]{ 49,3,47});
-        Point p3 = new Point(3, new double[]{ 49,56,84});
-        Point p4 =  new Point(3, new double[]{ 55,26,34});
-        Point p5 =  new Point(3, new double[]{ 74,74,12});
-        Point p6 =  new Point(3, new double[]{ 90,45,10});
-        Point p7 =  new Point(3, new double[]{ 90,15,6});
+        Point p1 = new Point(3, new double[]{21, 11, 81});
+        Point p2 = new Point(3, new double[]{49, 3, 47});
+        Point p3 = new Point(3, new double[]{49, 56, 84});
+        Point p4 = new Point(3, new double[]{55, 26, 34});
+        Point p5 = new Point(3, new double[]{74, 74, 12});
+        Point p6 = new Point(3, new double[]{90, 45, 10});
+        Point p7 = new Point(3, new double[]{90, 15, 6});
 
 
         ArrayList<Point> points = new ArrayList<>();
@@ -294,12 +290,12 @@ public class Driver {
 
     private static void testIsolated8() {
         System.out.println("Isolated test 8: ");
-        Point p1 = new Point(3, new double[]{ 16,61,47});
-       Point p2 = new Point(3, new double[]{ 35,26,2});
-        Point p3 = new Point(3, new double[]{ 51,1,79});
-        Point p4 =  new Point(3, new double[]{ 55,56,62});
-        Point p5 =  new Point(3, new double[]{ 79,63,30});
-        Point p6 =  new Point(3, new double[]{ 82,38,65});
+        Point p1 = new Point(3, new double[]{16, 61, 47});
+        Point p2 = new Point(3, new double[]{35, 26, 2});
+        Point p3 = new Point(3, new double[]{51, 1, 79});
+        Point p4 = new Point(3, new double[]{55, 56, 62});
+        Point p5 = new Point(3, new double[]{79, 63, 30});
+        Point p6 = new Point(3, new double[]{82, 38, 65});
 
 
         ArrayList<Point> points = new ArrayList<>();
