@@ -61,7 +61,7 @@ public class Driver {
         System.out.println("ClosestPairAlgo: " + testReturn);
         System.out.println("BruteForce: " + bruteforce);
 
-        List<List<Point>> lists = Utility.verifyAlgorithm(3, 200, 5000, 1000, new ThreeDSlowFactory());
+        List<List<Point>> lists = Utility.verifyAlgorithm(3, 100, 5000, 1000, new ThreeDSlowFactory());
         if (lists != null) {
             System.out.println("points \n" + lists);
         }
@@ -82,7 +82,7 @@ public class Driver {
         System.out.println("ClosestPairAlgo: " + testReturn);
         System.out.println("BruteForce: " + bruteforce);
 
-        List<List<Point>> lists = Utility.verifyAlgorithm(3, 200, 50000, 1000, new ThreeDFastFactory());
+        List<List<Point>> lists = Utility.verifyAlgorithm(3, 200, 5000, 1000, new ThreeDFastFactory());
 //        List<List<Point>> lists = Utility.verifyAlgorithm(3, 200, 6, 100, new ThreeDFastFactory());
         if (lists != null) {
             System.out.println("points \n" + lists.get(0));
@@ -92,10 +92,8 @@ public class Driver {
     public static void main(String[] args) {
 //        testCloning();
 
-//        test2d();  // 2d in O(n lg n)
-//        test3dSlow(); //3d-slow in O(n lg^2 n)
-
-
+        test2d();  // 2d in O(n lg n)
+        test3dSlow(); //3d-slow in O(n lg^2 n)
         test3dFast();
 
 //        bigNumberRun();

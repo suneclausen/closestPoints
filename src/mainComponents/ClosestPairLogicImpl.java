@@ -48,6 +48,10 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
         if (recursion.equals("3D-Fast-TOP")) {
             int debug = 2;
         }
+        if (recursion.equals("3D-Slow-TOP")) {
+            int debug = 2;
+        }
+
 
         //stop condition
         if (numberOfPoints <= 3) {

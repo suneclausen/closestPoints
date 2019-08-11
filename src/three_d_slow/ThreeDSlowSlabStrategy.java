@@ -34,12 +34,32 @@ public class ThreeDSlowSlabStrategy implements SlabStrategy {
         // Change indexes to have only one element, since this is expected in 2d. We make a copy of the slab such that the points from the 3d algorithm will still have all the index.
 //        List<List<Point>> slabCopy = slab;
         List<List<Point>> slabCopy = new ArrayList<>();
-        slabCopy.addAll(slab);
-        for (Point point : slabCopy.get(0)) {
-            if (point.getIndex().size() > 1) {
-//                point.removeIndexElement(0);
+//        slabCopy.addAll(slab);
+//        for (Point point : slabCopy.get(0)) {
+//            if (point.getIndex().size() > 1) {
+////                point.removeIndexElement(0);
+//            }
+//        }
+        for (List<Point> listSortedBy : slab) {
+            List<Point> toAdd = new ArrayList<>();
+            for (Point point : listSortedBy) {
+                try {
+                    // This is hacky. The twoD expects to look at index "x" to get the index of where the split is.
+                    // But in projected we let the "y" corrospond to the "x".
+                    // This is the reason why we need a deep copy of the point, such that we do not mess with the logic for three d which needs both indexes.
+                    Point p = point.clone();
+                    p.setIndex("x", p.getIndex().get("y"));
+                    toAdd.add(p);
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+
             }
+            slabCopy.add(toAdd);
         }
+
+
+
 
         ClosestPairLogic cpTwoDLogic = new ClosestPairLogicImpl(closestPairLogic.getDimension(), new TwoDFactory());
         ClosestPair cpFrom2d = cpTwoDLogic.closestPair(slabCopy, "3D-Slow-TOP");

@@ -14,7 +14,7 @@ public class TwoDDividingStrategy implements DividingStrategy {
         List<Point> pointsByY = points.get(1);
 
         //TODO write better
-        int medianIndexXValue = points.get(0).get(medianIndex).getIndex().get(0); //get the given index of the medianpoint at the median point index.
+        int medianIndexXValue = points.get(0).get(medianIndex).getIndex().get("x"); //get the given index of the medianpoint at the median point index.
         medianIndex = medianIndexXValue;
 
 
@@ -22,7 +22,7 @@ public class TwoDDividingStrategy implements DividingStrategy {
         List<Point> pointsByX_Left = new ArrayList<>();
         List<Point> pointsByX_Right = new ArrayList<>();
         for (Point point : pointsByX) {
-            if (point.getIndex().get(0) <= medianIndex) { //get(0) gets the index of x
+            if (point.getIndex().get("x") <= medianIndex) { //get(0) gets the index of x
                 pointsByX_Left.add(point);
             } else {
                 pointsByX_Right.add(point);
@@ -33,7 +33,7 @@ public class TwoDDividingStrategy implements DividingStrategy {
         List<Point> pointsByY_Left = new ArrayList<>();
         List<Point> pointsByY_Right = new ArrayList<>();
         for (Point point : pointsByY) {
-            if (point.getIndex().get(0) <= medianIndex) {
+            if (point.getIndex().get("x") <= medianIndex) {
                 pointsByY_Left.add(point);
             } else {
                 pointsByY_Right.add(point);

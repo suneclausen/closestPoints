@@ -46,6 +46,11 @@ public class Point {
         this.index.put(coordinate, index);
     }
 
+    public void replaceIndex(HashMap<String, Integer> replacer){
+        this.index = replacer;
+    }
+
+
 //    public void setIndex(List<Integer> index) {
 //        this.index = index;
 //    }
@@ -72,9 +77,9 @@ public class Point {
 //    }
 
     @Override
-    protected Point clone() throws CloneNotSupportedException {
+    public Point clone() throws CloneNotSupportedException {
         Point clonedPoint = new Point(getDimension(), getCoordinates());
-//        clonedPoint.setIndex(getIndex()); //TODO: FIX!
+        clonedPoint.replaceIndex(getIndex()); //TODO: FIX!
         return clonedPoint;
 
     }
