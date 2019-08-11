@@ -15,7 +15,8 @@ public class ThreeDSlowDividingStrategy implements DividingStrategy {
         List<Point> pointsByY = points.get(1);
         List<Point> pointsByZ = points.get(2);
 
-        int median = points.get(0).get(medianIndex).getIndex().get("x"); //get the given index of the medianpoint at the median point index.
+        //get the given index of the medianpoint at the median point index.
+        int median = points.get(0).get(medianIndex).getIndex().get("x");
 
         // Get the x set
         List<Point> pointsByX_Left = new ArrayList<>();

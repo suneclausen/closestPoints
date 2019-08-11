@@ -32,14 +32,9 @@ public class ThreeDSlowSlabStrategy implements SlabStrategy {
     public ClosestPair traverseSlab(ClosestPair currentClosestPair, List<List<Point>> slab, ClosestPairLogicImpl closestPairLogic, String splitAxis) {
         // Format the points to work in the projected dimension accordingly to the datastructure defined in this algorithm .
         // Change indexes to have only one element, since this is expected in 2d. We make a copy of the slab such that the points from the 3d algorithm will still have all the index.
-//        List<List<Point>> slabCopy = slab;
+
         List<List<Point>> slabCopy = new ArrayList<>();
-//        slabCopy.addAll(slab);
-//        for (Point point : slabCopy.get(0)) {
-//            if (point.getIndex().size() > 1) {
-////                point.removeIndexElement(0);
-//            }
-//        }
+
         for (List<Point> listSortedBy : slab) {
             List<Point> toAdd = new ArrayList<>();
             for (Point point : listSortedBy) {
@@ -58,9 +53,7 @@ public class ThreeDSlowSlabStrategy implements SlabStrategy {
             slabCopy.add(toAdd);
         }
 
-
-
-
+        // Run the slab in 2D - use twoDFactory.
         ClosestPairLogic cpTwoDLogic = new ClosestPairLogicImpl(closestPairLogic.getDimension(), new TwoDFactory());
         ClosestPair cpFrom2d = cpTwoDLogic.closestPair(slabCopy, "3D-Slow-TOP");
 
@@ -72,6 +65,7 @@ public class ThreeDSlowSlabStrategy implements SlabStrategy {
     }
 
 
+    // Helper: Gets the point of interest that lies within delta from the dividing line. TODO: Could be generalizes and used globally. Move then to Utility.
     private List<Point> getSlabList(double delta, List<Point> pointsSortedByACoordinate, double medianPointX) {
         List<Point> slabSortedByGivenCoordinate = new ArrayList<>();
         for (Point point : pointsSortedByACoordinate) {
