@@ -24,4 +24,10 @@ It gives the overall running time of O(n lg^{k-1} n), k = dimension
 
 ### The fast approach
 This approach will no matter the dimension end up running in O(n lg n). 
-... TBA ... 
+The way it works is to make it possible to split on diffrently on all the axis in the space- and not only just the x-axis. The axis chosen for this is the one which has the widest distance between the end points of kcn^{1-1/k} projected down on the axis - k = dimension, n = input size, c = sparsity constant (defined in code, when given a dimension). 
+
+When this is done then the division happens in the midle and this approach continues until the stop-condition is reached. 
+
+For the conquer-step we create the slab based on the axis that was split upon, and we find the points that lies within \delta of the dividing line. Because of the way the dividing lines is found, we are guarenteed that there are at most kcn^{1-1/k} points within \delta, and this number has a logartihmic relation to the input size (see paper for further explanation). This means that when projecting this amount of points from e.g. 3d to 2d we send kcn^{1-1/k} points to a O(n lg n) algorithm and this will make it run in O(n), because of the logarithmic relation. This would make the 3d problem to be solved in O(n lg n).  The same would go for 4d to 3d, since we now know 3d takes O(n lg n) and again would we only project the logarithmic relation of points to 3d - again yielding O(n lg n).  
+
+... This has not yet been implemented ... 
