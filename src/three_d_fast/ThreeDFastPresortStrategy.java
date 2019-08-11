@@ -62,10 +62,8 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         // set the index of the point of where it is in the y-sorted-list
         for (int i = 0; i < pointsSortedByY.size(); i++) {
             Point p = pointsSortedByY.get(i);
-//            p.addIndex(i);
             p.setIndex("y", i);
         }
-
 
         // Handle for z
         pointsSortedByZ.addAll(pointsSortedByY);
@@ -85,7 +83,6 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         // set the index of the point of where it is in the z-sorted-list
         for (int i = 0; i < pointsSortedByZ.size(); i++) {
             Point p = pointsSortedByZ.get(i);
-//            p.addIndex(i);
             p.setIndex("z", i);
         }
 
@@ -95,7 +92,6 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         pointsSortedByX.sort(new Comparator<Point>() {
             @Override
             public int compare(Point p1, Point p2) {
-//                int value = p1.getIndex().get(X) - p2.getIndex().get(X);
                 int value = p1.getIndex().get("x") - p2.getIndex().get("x");
                 if (value < 0) {
                     return -1;
@@ -112,7 +108,6 @@ public class ThreeDFastPresortStrategy implements PresortStrategy {
         pointsSortedByY.sort(new Comparator<Point>() {
             @Override
             public int compare(Point p1, Point p2) {
-//                int value = p1.getIndex().get(Y) - p2.getIndex().get(Y);
                 int value = p1.getIndex().get("y") - p2.getIndex().get("y");
                 if (value < 0) {
                     return -1;

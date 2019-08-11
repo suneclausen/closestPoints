@@ -16,36 +16,35 @@ public class TwoDHelperDivdingStrategy implements DividingStrategy {
         List<Point> pointsSortedByX = points.get(X);
         List<Point> pointsSortedByY = points.get(Y);
         // Return lists
-        List<Point> x_left  = new ArrayList<>();
+        List<Point> x_left = new ArrayList<>();
         List<Point> x_right = new ArrayList<>();
-        List<Point> y_left  = new ArrayList<>();
+        List<Point> y_left = new ArrayList<>();
         List<Point> y_right = new ArrayList<>();
 
-        if (splitAxis.equals("x")){
+        if (splitAxis.equals("x")) {
             // Sorted x is the y coordinate of the points
             // Sorted y is the z coordinate of the points
             int median = pointsSortedByX.get(medianIndex).getIndex().get("y"); //get the given index of the medianpoint at the median point index.
-            medianIndex = median;
 
             for (Point point : pointsSortedByX) {
                 Integer xIndex = point.getIndex().get("y");
-                if (xIndex <= medianIndex){
+                if (xIndex <= median) {
                     x_left.add(point);
-                }else {
+                } else {
                     x_right.add(point);
                 }
             }
 
             for (Point point : pointsSortedByY) {
                 Integer xIndex = point.getIndex().get("y");
-                if (xIndex <= medianIndex){
+                if (xIndex <= median) {
                     y_left.add(point);
-                }else {
+                } else {
                     y_right.add(point);
                 }
             }
         }
-        if (splitAxis.equals("y") || splitAxis.equals("z")){
+        if (splitAxis.equals("y") || splitAxis.equals("z")) {
             /*
             if splitAxis == y
                 # Sorted x is the x coordinate of the points
@@ -57,22 +56,21 @@ public class TwoDHelperDivdingStrategy implements DividingStrategy {
              */
             //TODO: Write better
             int median = points.get(0).get(medianIndex).getIndex().get("x"); //get the given index of the medianpoint at the median point index.
-            medianIndex = median;
 
             for (Point point : pointsSortedByX) {
                 Integer xIndex = point.getIndex().get("x");
-                if (xIndex <= medianIndex){
+                if (xIndex <= median) {
                     x_left.add(point);
-                }else {
+                } else {
                     x_right.add(point);
                 }
             }
 
             for (Point point : pointsSortedByY) {
                 Integer xIndex = point.getIndex().get("x");
-                if (xIndex <= medianIndex){
+                if (xIndex <= median) {
                     y_left.add(point);
-                }else {
+                } else {
                     y_right.add(point);
                 }
             }
@@ -88,7 +86,6 @@ public class TwoDHelperDivdingStrategy implements DividingStrategy {
         right.add(x_right);
         right.add(y_right);
 
-//        return new List[]{left, right};
         DividingValuesHelper returnObject = new DividingValuesHelper(left, right);
         returnObject.setSplitAxis(splitAxis);
         return returnObject;

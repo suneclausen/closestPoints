@@ -24,57 +24,57 @@ public class ThreeDFastSlabStrategy implements SlabStrategy {
         List<Point> slabOne = new ArrayList<>();
         List<Point> slabTwo = new ArrayList<>();
 
-        if (splitAxis.equals("x")){
-            double medianValue = (cutList.get(0).getCoordinates()[X] + cutList.get(cutList.size()-1).getCoordinates()[X]) / 2;
+        if (splitAxis.equals("x")) {
+            double medianValue = (cutList.get(0).getCoordinates()[X] + cutList.get(cutList.size() - 1).getCoordinates()[X]) / 2;
 
-            for (Point point: pointsSortedByY) {
+            for (Point point : pointsSortedByY) {
                 double pointValue = point.getCoordinates()[X];
-                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
+                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta) {
                     slabOne.add(point);
                 }
             }
 
             for (Point point : pointsSortedByZ) {
                 double pointValue = point.getCoordinates()[X];
-                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
+                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta) {
                     slabTwo.add(point);
                 }
             }
         }
 
 
-        if (splitAxis.equals("y")){
-            double medianValue = (cutList.get(0).getCoordinates()[Y] + cutList.get(cutList.size()-1).getCoordinates()[Y]) / 2;
+        if (splitAxis.equals("y")) {
+            double medianValue = (cutList.get(0).getCoordinates()[Y] + cutList.get(cutList.size() - 1).getCoordinates()[Y]) / 2;
 
-            for (Point point: pointsSortedByX) {
+            for (Point point : pointsSortedByX) {
                 double pointValue = point.getCoordinates()[Y];
-                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
+                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta) {
                     slabOne.add(point);
                 }
             }
 
             for (Point point : pointsSortedByZ) {
                 double pointValue = point.getCoordinates()[Y];
-                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
+                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta) {
                     slabTwo.add(point);
                 }
             }
         }
 
 
-        if (splitAxis.equals("z")){
-            double medianValue = (cutList.get(0).getCoordinates()[Z] + cutList.get(cutList.size()-1).getCoordinates()[Z]) / 2;
+        if (splitAxis.equals("z")) {
+            double medianValue = (cutList.get(0).getCoordinates()[Z] + cutList.get(cutList.size() - 1).getCoordinates()[Z]) / 2;
 
-            for (Point point: pointsSortedByX) {
+            for (Point point : pointsSortedByX) {
                 double pointValue = point.getCoordinates()[Z];
-                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
+                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta) {
                     slabOne.add(point);
                 }
             }
 
             for (Point point : pointsSortedByY) {
                 double pointValue = point.getCoordinates()[Z];
-                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta){
+                if (pointValue <= medianValue + delta && pointValue >= medianValue - delta) {
                     slabTwo.add(point);
                 }
             }
@@ -88,29 +88,11 @@ public class ThreeDFastSlabStrategy implements SlabStrategy {
 
     @Override
     public ClosestPair traverseSlab(ClosestPair currentClosestPair, List<List<Point>> slab, ClosestPairLogicImpl closestPairLogic, String splitAxis) {
-//        List<List<Point>> slabCopy = slab;
-//        List<List<Point>> slabCopy = new ArrayList<>();
-//        slabCopy.addAll(slab);
-//        for (Point point : slabCopy.get(0)) {
-//            if (point.getIndex().size() > 1) { //We project it down into 2d and solve it there, but we only expect it to have 1 index here.
-//                if (splitAxis.equals("x")){
-//                    point.removeIndexElement(0);
-//                }else if(splitAxis.equals("y")){
-//                    point.removeIndexElement(1);
-//                }else if (splitAxis.equals("z")){
-//                    point.removeIndexElement(2);
-////                    point.removeIndexElement(1);
-//                }else {
-//                    throw new RuntimeException("Something went wrong with what axis to split on. The axis does properly not exist. Given was: " + splitAxis);
-//                }
-//            }
-//        }
-
-        if (slab.get(0).size() == 0){
+        if (slab.get(0).size() == 0) {
             return currentClosestPair;
         }
 
-        //TODO: Fix logic and make 2d strategies to support the logic for the 3d implementation.
+        // Project the points down to 2d and use this algorithm to solve problem. Have made 2dHelper that supports the functionality according to a splitaxis.
         ClosestPairLogic cpTwoDLogic = new ClosestPairLogicImpl(closestPairLogic.getDimension(), new TwoDHelperFactory());
         ((ClosestPairLogicImpl) cpTwoDLogic).setSplitAxis(splitAxis);
         ClosestPair cpFrom2d = cpTwoDLogic.closestPair(slab, "3D-Fast-TOP");
