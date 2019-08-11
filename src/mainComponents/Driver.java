@@ -90,8 +90,6 @@ public class Driver {
     }
 
     public static void main(String[] args) {
-//        testCloning();
-
         test2d();  // 2d in O(n lg n)
         test3dSlow(); //3d-slow in O(n lg^2 n)
         test3dFast();
@@ -107,30 +105,6 @@ public class Driver {
 //        testIsolated7();
 //        testIsolated8();
     }
-
-    private static void testCloning() {
-        List<Point> org = new ArrayList<>();
-        org.add(new Point(3, new double[]{0, 0, 0}));
-
-        List<Point> copy = new ArrayList<>();
-//        copy.addAll(org);
-
-        for (Point p : org) {
-            try {
-                copy.add(p.clone());
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        System.out.println("before changing\n org: \n" + org + "\ncopy\n" + copy);
-        copy.get(0).setCoordinates(new double[]{5, 5, 5});
-        System.out.println("after changing\n org: \n" + org + "\ncopy\n" + copy);
-        System.out.println();
-        System.out.println();
-        System.out.println();
-    }
-
 
     private static void testIsolated1() {
         System.out.println("Isolated test 1: ");

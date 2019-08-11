@@ -5,15 +5,13 @@ import interfaces.ClosestPairLogic;
 import interfaces.DividingStrategy;
 import interfaces.PresortStrategy;
 import interfaces.SlabStrategy;
-import three_d_fast.ThreeDFastDividingStrategy;
-
-
 import java.util.*;
 
 public class ClosestPairLogicImpl implements ClosestPairLogic {
 
     private final int dimension;
     private int sparsityConstant;
+    private String splitAxis = "";
 
     // Strategies
     private DividingStrategy divideStrat;
@@ -29,35 +27,15 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
         this.dimension = originalDimension;
     }
 
-
-    private String debugSplit = "";
-    private String splitAxis = "";
-
-    public String getSplitAxis() {
-        return splitAxis;
-    }
-
-    public void setSplitAxis(String splitAxis) {
-        this.splitAxis = splitAxis;
-    }
-
-    //Param: Points: Sorted set of points to the respectve coordinate axes
+    //Param: Points: Sorted set of points to the respective coordinate axes
     public ClosestPair closestPair(List<List<Point>> points, String recursion) {
         int numberOfPoints = points.get(0).size();
-
-        if (recursion.equals("3D-Fast-TOP")) {
-            int debug = 2;
-        }
-        if (recursion.equals("3D-Slow-TOP")) {
-            int debug = 2;
-        }
-
 
         //stop condition
         if (numberOfPoints <= 3) {
             if (numberOfPoints == 0) {
                 // TODO; Figure out why it happens that we sometimes enter this part.
-                Point bufferPoint = new Point(getDimension(), new double[]{0,0,0});
+                Point bufferPoint = new Point(getDimension(), new double[]{0, 0, 0});
                 ClosestPair infDist = new ClosestPair(bufferPoint, bufferPoint);
                 infDist.setDistanceBetweenPoints(Double.POSITIVE_INFINITY);
                 return infDist;
@@ -141,10 +119,6 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
         }
     }
 
-    public int getSparsityConstant() {
-        return sparsityConstant;
-    }
-
     @Override
     public DividingValuesHelper dividePoints(List<List<Point>> points, int medianIndex, String splitAxis) {
         return divideStrat.dividePoints(points, medianIndex, splitAxis);
@@ -157,5 +131,17 @@ public class ClosestPairLogicImpl implements ClosestPairLogic {
 
     public int getDimension() {
         return dimension;
+    }
+
+    public int getSparsityConstant() {
+        return sparsityConstant;
+    }
+
+    public String getSplitAxis() {
+        return splitAxis;
+    }
+
+    public void setSplitAxis(String splitAxis) {
+        this.splitAxis = splitAxis;
     }
 }
